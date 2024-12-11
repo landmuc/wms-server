@@ -1,4 +1,4 @@
-package com.landmuc.wms_server;
+package com.landmuc.wms_server.event;
 
 import java.time.LocalDateTime;
 
