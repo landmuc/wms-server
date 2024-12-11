@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+
 plugins {
 	java
 	id("org.springframework.boot") version "3.4.0"
@@ -19,11 +21,14 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
+  implementation("com.h2database:h2")
+
+  // Spring JPA
   // implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   // implementation("org.postgresql:postgresql") // PostgreSQL Driver
 
 
-  // Testing
+  // testing
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
@@ -31,3 +36,17 @@ dependencies {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+// This section causes useful test output to go to the terminal.
+tasks.test {
+    testLogging {
+        events("passed", "skipped", "failed") // Commented out options: "standardOut", "standardError"
+        showExceptions = true
+        exceptionFormat = TestExceptionFormat.FULL
+        showCauses = true
+        showStackTraces = true
+        // Change to `true` for more verbose test output
+        showStandardStreams = false
+    }
+}
+
