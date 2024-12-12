@@ -22,9 +22,8 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
   implementation("com.h2database:h2")
-
-  // Spring JPA
-  // implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+  implementation("org.springframework.boot:spring-boot-devtools") // Optional: If you want H2 console
+  implementation("org.springframework.boot:spring-boot-starter-data-jpa") // Spring JPA repository
   // implementation("org.postgresql:postgresql") // PostgreSQL Driver
 
 
@@ -37,7 +36,7 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-// This section causes useful test output to go to the terminal.
+// This section causes useful test output to go to the terminal
 tasks.test {
     testLogging {
         events("passed", "skipped", "failed") // Commented out options: "standardOut", "standardError"

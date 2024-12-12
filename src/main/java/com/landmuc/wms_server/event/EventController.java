@@ -18,4 +18,9 @@ public class EventController {
     return eventService.getEvent();
   }
 
+  @GetMapping("/newEntity")
+  public EventEntity getEventEntity() {
+    EventEntity newEntity = new EventEntity();
+    return newEntity;
+  }
 }
