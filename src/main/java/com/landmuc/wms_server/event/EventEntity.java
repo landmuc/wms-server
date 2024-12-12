@@ -4,9 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 // using class instead of record because database configurations (mostly) need an empty constructor which record does not provide
 @Entity
+@Table(name = "events")
 public class EventEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
