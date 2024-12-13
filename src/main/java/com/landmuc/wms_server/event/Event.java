@@ -15,4 +15,12 @@ public record Event(
 // EventStatus eventStatus,
 // boolean isFollowed
 ) {
+
+  // EventEntity Mapper
+  public EventEntity toEventEntity() {
+    return new EventEntity(
+        this.id,
+        this.title,
+        this.description);
+  }
 }

@@ -25,6 +25,15 @@ public class EventEntity {
     this.description = description;
   }
 
+  // Event Mapper
+  public Event toEvent() {
+    return new Event(
+        this.id,
+        this.title,
+        this.description);
+  }
+
+  // Getters and Setters
   public Long getId() {
     return id;
   }
