@@ -1,7 +1,5 @@
 package com.landmuc.wms_server.event;
 
-import java.time.LocalDateTime;
-
 public record Event(
     Long id,
     String title,
