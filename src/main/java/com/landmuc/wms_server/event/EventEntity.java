@@ -11,7 +11,8 @@ import jakarta.persistence.Table;
 @Table(name = "events")
 public class EventEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY: relies on the database to generate unique Ids.
+                                                      // Commonly used with dbs like MySQL and PostgreSQL
   public Long id;
   public String title;
   public String description;
