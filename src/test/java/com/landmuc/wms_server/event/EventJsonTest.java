@@ -36,13 +36,18 @@ class EventJsonTest {
   @Test
   void eventSerializationTest() throws IOException {
     Event event = events[0];
-    assertThat(json.write(event)).isStrictlyEqualToJson("single.json");
+    assertThat(json.write(event)).isStrictlyEqualToJson("singleEvent.json");
     assertThat(json.write(event)).hasJsonPathNumberValue("@.id");
     assertThat(json.write(event)).extractingJsonPathNumberValue("@.id").isEqualTo(123);
     assertThat(json.write(event)).hasJsonPathStringValue("@.title");
     assertThat(json.write(event)).extractingJsonPathStringValue("@.title").isEqualTo("First Title");
     assertThat(json.write(event)).hasJsonPathStringValue("@.description");
     assertThat(json.write(event)).extractingJsonPathStringValue("@.description").isEqualTo("First Description");
+  }
+
+  @Test
+  void eventListSerializationTest() throws IOException {
+    assertThat(jsonList.write(events)).isStrictlyEqualToJson("listOfEvents.json");
   }
 
   @Test
@@ -60,6 +65,18 @@ class EventJsonTest {
     assertThat(json.parseObject(expected).id()).isEqualTo(123);
     assertThat(json.parseObject(expected).title()).isEqualTo("First Title");
     assertThat(json.parseObject(expected).description()).isEqualTo("First Description");
+  }
+
+  @Test
+  void eventListDeserialitationTest() throws IOException {
+    String expected = """
+        [
+          {"id": 123, "title": "First Title", "description": "First Description"},
+          {"id": 344, "title": "Second Title", "description": "Second Description"},
+          {"id": 666, "title": "Third Title", "description": "Third Description"}
+        ]
+            """;
+    assertThat(jsonList.parse(expected)).isEqualTo(events);
   }
 
 }
