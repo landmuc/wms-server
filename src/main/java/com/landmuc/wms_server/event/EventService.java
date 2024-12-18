@@ -35,6 +35,14 @@ public class EventService {
     return eventRepository.save(eventEntity);
   }
 
+  public boolean deleteEventById(Long requestedId) {
+    if (!eventRepository.existsById(requestedId)) {
+      return false;
+    }
+    eventRepository.deleteById(requestedId);
+    return true;
+  }
+
   // --------------------- CURRENTLY NOT USED ---------------------
 
   public Event getEventById(Long requestedId) {

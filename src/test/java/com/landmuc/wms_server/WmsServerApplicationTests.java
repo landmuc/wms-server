@@ -4,8 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.DirtiesContext;
 
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
@@ -24,7 +26,7 @@ class WmsServerApplicationTests {
   @Test
   void shouldReturnEventWithKnownId() {
     ResponseEntity<String> response = restTemplate
-        .getForEntity("/events/99", String.class);
+        .getForEntity("/events/123", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     DocumentContext documentContext = JsonPath.parse(response.getBody());
@@ -59,7 +61,17 @@ class WmsServerApplicationTests {
 
   }
 
-  // TODO: Delete event test
+  @Test
+  @DirtiesContext
+  void shoudlDeleteExistingEvent() {
+    ResponseEntity<Void> response = restTemplate
+        .exchange("/events/123", HttpMethod.DELETE, null, Void.class);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+
+    ResponseEntity<String> getResponse = restTemplate
+        .getForEntity("/events/123", String.class);
+    assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+  }
 
   // TODO: Update event test
 
