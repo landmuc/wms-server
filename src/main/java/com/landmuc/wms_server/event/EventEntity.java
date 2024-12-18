@@ -20,6 +20,11 @@ public class EventEntity {
   public EventEntity() {
   }
 
+  public EventEntity(String title, String description) {
+    this.title = title;
+    this.description = description;
+  }
+
   public EventEntity(Long id, String title, String description) {
     this.id = id;
     this.title = title;
