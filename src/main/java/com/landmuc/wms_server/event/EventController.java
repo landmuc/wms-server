@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import jakarta.persistence.EntityNotFoundException;
-
 @RestController
 @RequestMapping("/events") // all request going to /events will be controlled by this controller
 public class EventController {
@@ -25,11 +23,12 @@ public class EventController {
   }
 
   @GetMapping("/{requestedId}")
-  private ResponseEntity<Event> getEventById(@PathVariable Long requestedId) {
-    try {
-      Event event = eventService.getEventById(requestedId);
+  private ResponseEntity<Event> findEventById(@PathVariable Long requestedId) {
+    Event event = eventService.findEventById(requestedId);
+
+    if (event != null) {
       return ResponseEntity.ok(event);
-    } catch (EntityNotFoundException e) {
+    } else {
       return ResponseEntity.notFound().build();
     }
   }

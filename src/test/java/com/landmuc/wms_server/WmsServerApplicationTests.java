@@ -24,7 +24,7 @@ class WmsServerApplicationTests {
   @Test
   void shouldReturnEventWithKnownId() {
     ResponseEntity<String> response = restTemplate
-        .getForEntity("/events/123", String.class);
+        .getForEntity("/events/99", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     DocumentContext documentContext = JsonPath.parse(response.getBody());
