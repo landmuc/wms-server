@@ -7,6 +7,8 @@ import com.landmuc.wms_server.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
 
+// Business logic should return domain objects (DTO), not HTTP responses
+// also handles data transformation
 @Service
 public class EventService {
   private final EventRepository eventRepository;
@@ -16,9 +18,7 @@ public class EventService {
     this.eventRepository = eventRepository;
   }
 
-  // Business logic should return domain objects (DTO), not HTTP responses
-  // also handles data transformation
-
+  // could also use findById()
   public Event getEventById(Long requestedId) {
     try {
       // getReferenceById() return a reference (proxy) to the entity and only triggers
@@ -31,6 +31,11 @@ public class EventService {
       throw new ResourceNotFoundException("Event not found with id: " + requestedId); // For security reasonses this
     }
 
+  }
+
+  public EventEntity createEvent(Event event) {
+    EventEntity eventEntity = new EventEntity(null, event.title(), event.description());
+    return eventRepository.save(eventEntity);
   }
 
   public Event getEventTest() {
