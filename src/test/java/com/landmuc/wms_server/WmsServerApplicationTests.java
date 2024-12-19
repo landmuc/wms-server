@@ -37,7 +37,13 @@ class WmsServerApplicationTests {
     assertThat(title).isEqualTo("First Title");
     String description = documentContext.read("$.description");
     assertThat(description).isEqualTo("First Description");
+  }
 
+  @Test
+  void shouldNotReturnEventWithUnknownId() {
+    ResponseEntity<String> response = restTemplate
+        .getForEntity("/events/9999", String.class);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
   }
 
   @Test
