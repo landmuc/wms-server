@@ -1,8 +1,13 @@
 package com.landmuc.wms_server.event;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.landmuc.wms_server.domain.ResourceNotFoundException;
@@ -28,6 +33,20 @@ public class EventService {
     } else {
       return null;
     }
+  }
+
+  public List<Event> getAllEvents(Pageable pageable) {
+    Page<EventEntity> page = eventRepository.findAll(PageRequest.of(
+        pageable.getPageNumber(),
+        pageable.getPageSize(),
+        pageable.getSortOr(Sort.by(Sort.Direction.ASC, "title"))));
+
+    List<Event> eventList = page.getContent() // getContent() returns an empty list if no entities are found
+        .stream()
+        .map(EventEntity::toEvent)
+        .toList(); // returns a unmodifiable list
+
+    return eventList;
   }
 
   public EventEntity createEvent(Event event) {
@@ -76,8 +95,4 @@ public class EventService {
 
   }
 
-  public Event getEventTest() {
-    Event event = new Event(123L, "Title", "Description");
-    return event;
-  }
 }

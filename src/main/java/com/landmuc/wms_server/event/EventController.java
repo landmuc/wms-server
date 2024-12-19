@@ -1,8 +1,10 @@
 package com.landmuc.wms_server.event;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +34,12 @@ public class EventController {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(event);
+  }
+
+  @GetMapping()
+  private ResponseEntity<List<Event>> getAllEvents(Pageable pageable) {
+    List<Event> eventList = eventService.getAllEvents(pageable);
+
   }
 
   @PostMapping
