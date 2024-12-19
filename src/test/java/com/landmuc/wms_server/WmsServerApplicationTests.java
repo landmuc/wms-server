@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,6 +74,34 @@ class WmsServerApplicationTests {
     assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
   }
 
-  // TODO: Update event test
+  @Test
+  @DirtiesContext
+  void shouldUpdateAnExistingEvent() {
+    EventEntity eventEntityUpdate = new EventEntity(null, "Updated title", "Updated description");
+    HttpEntity<EventEntity> request = new HttpEntity<>(eventEntityUpdate);
+    ResponseEntity<Void> response = restTemplate
+        .exchange("/events/123", HttpMethod.PUT, request, Void.class);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
+    ResponseEntity<String> getResponse = restTemplate
+        .getForEntity("/events/123", String.class);
+    assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+    DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
+    Number id = documentContext.read("$.id");
+    assertThat(id).isEqualTo(123);
+    String title = documentContext.read("$.title");
+    assertThat(title).isEqualTo("Updated title");
+    String description = documentContext.read("$.description");
+    assertThat(description).isEqualTo("Updated description");
+  }
+
+  @Test
+  void shouldNotUpdateAnEventThatDoesNotExist() {
+    EventEntity eventEntityUpdate = new EventEntity(null, "Updated title", "Updated description");
+    HttpEntity<EventEntity> request = new HttpEntity<>(eventEntityUpdate);
+    ResponseEntity<Void> response = restTemplate
+        .exchange("/events/9999", HttpMethod.PUT, request, Void.class);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+  }
 }

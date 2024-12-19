@@ -43,6 +43,22 @@ public class EventService {
     return true;
   }
 
+  // create new Event and replace new Event with the old one -> same ID
+  public EventEntity updateEvent(Long requestedId, Event updatedEvent) {
+    Optional<EventEntity> optionalEventEntity = eventRepository.findById(requestedId);
+
+    if (optionalEventEntity.isEmpty()) {
+      return null;
+    }
+
+    EventEntity updatedEventEntity = new Event(
+        optionalEventEntity.get().getId(),
+        updatedEvent.title(),
+        updatedEvent.description()).toEventEntity();
+
+    return eventRepository.save(updatedEventEntity);
+  }
+
   // --------------------- CURRENTLY NOT USED ---------------------
 
   public Event getEventById(Long requestedId) {

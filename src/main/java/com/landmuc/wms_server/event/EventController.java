@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,11 +28,10 @@ public class EventController {
   private ResponseEntity<Event> findEventById(@PathVariable Long requestedId) {
     Event event = eventService.findEventById(requestedId);
 
-    if (event != null) {
-      return ResponseEntity.ok(event);
-    } else {
+    if (event == null) {
       return ResponseEntity.notFound().build();
     }
+    return ResponseEntity.ok(event);
   }
 
   @PostMapping
@@ -53,6 +53,17 @@ public class EventController {
     return ResponseEntity.noContent().build();
   }
 
+  @PutMapping("/{requestedId}")
+  private ResponseEntity<Void> updateEvent(@PathVariable Long requestedId, @RequestBody Event updatedEvent) {
+    EventEntity eventEntity = eventService.updateEvent(requestedId, updatedEvent);
+
+    if (eventEntity == null) {
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.noContent().build();
+  }
+
+  // just for inital testing
   @GetMapping
   public Event getEventTest() {
     return eventService.getEventTest();
