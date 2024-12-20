@@ -40,6 +40,10 @@ public class EventController {
   private ResponseEntity<List<Event>> getAllEvents(Pageable pageable) {
     List<Event> eventList = eventService.getAllEvents(pageable);
 
+    if (eventList.isEmpty()) {
+      return ResponseEntity.noContent().build();
+    }
+    return ResponseEntity.ok(eventList);
   }
 
   @PostMapping
@@ -69,12 +73,6 @@ public class EventController {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.noContent().build();
-  }
-
-  // just for inital testing
-  @GetMapping
-  public Event getEventTest() {
-    return eventService.getEventTest();
   }
 
 }

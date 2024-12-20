@@ -14,6 +14,8 @@ import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import com.landmuc.wms_server.event.EventEntity;
 
+import net.minidev.json.JSONArray;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.URI;
@@ -44,6 +46,34 @@ class WmsServerApplicationTests {
     ResponseEntity<String> response = restTemplate
         .getForEntity("/events/9999", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+  }
+
+  @Test
+  void shouldReturnAllEventsWhenListIsRequested() {
+    ResponseEntity<String> response = restTemplate
+        .getForEntity("/events", String.class);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+    DocumentContext documentContext = JsonPath.parse(response.getBody());
+    int eventCount = documentContext.read("$.length()");
+    assertThat(eventCount).isEqualTo(3);
+    JSONArray ids = documentContext.read("$..id");
+    assertThat(ids).containsExactlyInAnyOrder(123, 344, 666);
+    JSONArray titles = documentContext.read("$..title");
+    assertThat(titles).containsExactlyInAnyOrder("First Title", "Second Title",
+        "Third Title");
+
+  }
+
+  @Test
+  void shouldReturnAPageOfEvents() {
+    ResponseEntity<String> response = restTemplate
+        .getForEntity("/events?page=0&size=1", String.class);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+    DocumentContext documentContext = JsonPath.parse(response.getBody());
+    JSONArray page = documentContext.read("$[*]");
+    assertThat(page.size()).isEqualTo(1);
   }
 
   @Test
