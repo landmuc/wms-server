@@ -50,8 +50,10 @@ public class EventService {
   }
 
   public EventEntity createEvent(Event event) {
-    EventEntity eventEntity = new EventEntity(null, event.title(), event.description());
-    return eventRepository.save(eventEntity);
+    // EventEntity eventEntity = new EventEntity(null, event.title(),
+    // event.description());
+
+    return eventRepository.save(event.toEventEntity());
   }
 
   public boolean deleteEventById(Long requestedId) {
@@ -73,7 +75,15 @@ public class EventService {
     EventEntity updatedEventEntity = new Event(
         optionalEventEntity.get().getId(),
         updatedEvent.title(),
-        updatedEvent.description()).toEventEntity();
+        updatedEvent.description(),
+        optionalEventEntity.get().getDateCreated(),
+        optionalEventEntity.get().getTimeCreated(),
+        updatedEvent.eventDate(),
+        updatedEvent.eventTime(),
+        updatedEvent.eventEndDate(),
+        updatedEvent.eventEndTime(),
+        updatedEvent.eventStatus(),
+        updatedEvent.isFollowed()).toEventEntity();
 
     return eventRepository.save(updatedEventEntity);
   }

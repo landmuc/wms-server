@@ -16,6 +16,28 @@ public record Event(
     EventStatus eventStatus,
     boolean isFollowed) {
 
+  public Event(
+      String title,
+      String description,
+      LocalDate eventDate,
+      LocalTime eventTime,
+      LocalDate eventEndDate,
+      LocalTime eventEndTime,
+      EventStatus eventStatus,
+      boolean isFollowed) {
+    this(null,
+        title,
+        description,
+        null,
+        null,
+        eventDate,
+        eventTime,
+        eventEndDate,
+        eventEndTime,
+        eventStatus,
+        isFollowed);
+  }
+
   // EventEntity Mapper
   public EventEntity toEventEntity() {
     return new EventEntity(
