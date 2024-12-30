@@ -1,5 +1,13 @@
 {
   "id": 123,
   "title": "First Title",
-  "description": "First Description"
+  "description": "First Description",
+  "dateCreated": "2024-10-12",
+  "timeCreated": "10:38:00",
+  "eventDate": "2024-12-24",
+  "eventTime": "14:30:00",
+  "eventEndDate": "2025-11-17",
+  "eventEndTime": "23:59:00",
+  "eventStatus": "ONGOING",
+  "isFollowed": true
 }

@@ -5,6 +5,8 @@ public enum EventStatus {
   ONGOING("Ongoing"),
   OVER("Over");
 
+  // TODO: Do I really need the eventStatusText? It is not needed for
+  // (de-)serializaiton.
   private final String eventStatusText;
 
   private EventStatus(String eventStatusText) {

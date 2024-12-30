@@ -13,12 +13,15 @@ import org.springframework.test.annotation.DirtiesContext;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import com.landmuc.wms_server.event.EventEntity;
+import com.landmuc.wms_server.event.EventStatus;
 
 import net.minidev.json.JSONArray;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class WmsServerApplicationTests {
@@ -78,7 +81,15 @@ class WmsServerApplicationTests {
 
   @Test
   void shouldCreateANewEvent() {
-    EventEntity eventEntity = new EventEntity(null, "Freshly Created", "New Description");
+    EventEntity eventEntity = new EventEntity(
+        "Freshly Created",
+        "New Description",
+        LocalDate.of(2025, 9, 14), // eventDate
+        LocalTime.of(14, 30), // eventTime
+        LocalDate.of(2025, 11, 27), // eventEndDate
+        LocalTime.of(23, 59), // eventEndTime
+        EventStatus.UPCOMING,
+        true);
     ResponseEntity<Void> response = restTemplate
         .postForEntity("/events", eventEntity, Void.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -113,7 +124,15 @@ class WmsServerApplicationTests {
   @Test
   @DirtiesContext
   void shouldUpdateAnExistingEvent() {
-    EventEntity eventEntityUpdate = new EventEntity(null, "Updated title", "Updated description");
+    EventEntity eventEntityUpdate = new EventEntity(
+        "Updated Title",
+        "Updated Description",
+        LocalDate.of(2025, 9, 14), // eventDate
+        LocalTime.of(14, 30), // eventTime
+        LocalDate.of(2025, 11, 27), // eventEndDate
+        LocalTime.of(23, 59), // eventEndTime
+        EventStatus.UPCOMING,
+        true);
     HttpEntity<EventEntity> request = new HttpEntity<>(eventEntityUpdate);
     ResponseEntity<Void> response = restTemplate
         .exchange("/events/123", HttpMethod.PUT, request, Void.class);
@@ -134,7 +153,15 @@ class WmsServerApplicationTests {
 
   @Test
   void shouldNotUpdateAnEventThatDoesNotExist() {
-    EventEntity eventEntityUpdate = new EventEntity(null, "Updated title", "Updated description");
+    EventEntity eventEntityUpdate = new EventEntity(
+        "Updated Title",
+        "Updated Description",
+        LocalDate.of(2025, 9, 14), // eventDate
+        LocalTime.of(14, 30), // eventTime
+        LocalDate.of(2025, 11, 27), // eventEndDate
+        LocalTime.of(23, 59), // eventEndTime
+        EventStatus.UPCOMING,
+        true);
     HttpEntity<EventEntity> request = new HttpEntity<>(eventEntityUpdate);
     ResponseEntity<Void> response = restTemplate
         .exchange("/events/9999", HttpMethod.PUT, request, Void.class);

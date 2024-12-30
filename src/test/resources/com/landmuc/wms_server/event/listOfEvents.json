@@ -1,5 +1,41 @@
 [
-  {"id": 123, "title": "First Title", "description": "First Description"},
-  {"id": 344, "title": "Second Title", "description": "Second Description"},
-  {"id": 666, "title": "Third Title", "description": "Third Description"}
+{
+  "id": 123,
+  "title": "First Title",
+  "description": "First Description",
+  "dateCreated": "2024-10-12",
+  "timeCreated": "10:38:00",
+  "eventDate": "2024-12-24",
+  "eventTime": "14:30:00",
+  "eventEndDate": "2025-11-17",
+  "eventEndTime": "23:59:00",
+  "eventStatus": "ONGOING",
+  "isFollowed": true
+},
+{
+  "id": 344,
+  "title": "Second Title",
+  "description": "Second Description",
+  "dateCreated": "2024-08-13",
+  "timeCreated": "10:44:00",
+  "eventDate": "2024-10-07",
+  "eventTime": "20:00:00",
+  "eventEndDate": "2024-10-08",
+  "eventEndTime": "11:59:00",
+  "eventStatus": "OVER",
+  "isFollowed": false
+},
+{
+  "id": 666,
+  "title": "Third Title",
+  "description": "Third Description",
+  "dateCreated": "2024-10-30",
+  "timeCreated": "08:30:00",
+  "eventDate": "2025-12-15",
+  "eventTime": "12:00:00",
+  "eventEndDate": "2025-12-24",
+  "eventEndTime": "17:00:00",
+  "eventStatus": "UPCOMING",
+  "isFollowed": true
+}
 ]
