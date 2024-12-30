@@ -50,9 +50,6 @@ public class EventService {
   }
 
   public EventEntity createEvent(Event event) {
-    // EventEntity eventEntity = new EventEntity(null, event.title(),
-    // event.description());
-
     return eventRepository.save(event.toEventEntity());
   }
 

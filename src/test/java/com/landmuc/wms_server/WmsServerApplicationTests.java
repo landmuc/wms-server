@@ -42,6 +42,19 @@ class WmsServerApplicationTests {
     assertThat(title).isEqualTo("First Title");
     String description = documentContext.read("$.description");
     assertThat(description).isEqualTo("First Description");
+    String dateCreated = documentContext.read("$.dateCreated");
+    assertThat(dateCreated).isEqualTo("2024-10-12");
+    String timeCreated = documentContext.read("$.timeCreated");
+    assertThat(timeCreated).isEqualTo("10:38:00");
+    String eventDate = documentContext.read("$.eventDate");
+    assertThat(eventDate).isEqualTo("2024-12-24");
+    String eventTime = documentContext.read("$.eventTime");
+    assertThat(eventTime).isEqualTo("14:30:00");
+    String eventEndDate = documentContext.read("$.eventEndDate");
+    assertThat(eventEndDate).isEqualTo("2025-11-17");
+    String eventEndTime = documentContext.read("$.eventEndTime");
+    assertThat(eventEndTime).isEqualTo("23:59:00");
+
   }
 
   @Test
@@ -82,7 +95,7 @@ class WmsServerApplicationTests {
   @Test
   void shouldCreateANewEvent() {
     EventEntity eventEntity = new EventEntity(
-        "Freshly Created",
+        "New Created",
         "New Description",
         LocalDate.of(2025, 9, 14), // eventDate
         LocalTime.of(14, 30), // eventTime
@@ -103,15 +116,23 @@ class WmsServerApplicationTests {
     Number id = documentContext.read("$.id");
     assertThat(id).isNotNull();
     String title = documentContext.read("$.title");
-    assertThat(title).isEqualTo("Freshly Created");
+    assertThat(title).isEqualTo("New Created");
     String description = documentContext.read("$.description");
     assertThat(description).isEqualTo("New Description");
+    String eventDate = documentContext.read("$.eventDate");
+    assertThat(eventDate).isEqualTo("2025-09-14");
+    String eventTime = documentContext.read("$.eventTime");
+    assertThat(eventTime).isEqualTo("14:30:00");
+    String eventEndDate = documentContext.read("$.eventEndDate");
+    assertThat(eventEndDate).isEqualTo("2025-11-27");
+    String eventEndTime = documentContext.read("$.eventEndTime");
+    assertThat(eventEndTime).isEqualTo("23:59:00");
 
   }
 
   @Test
   @DirtiesContext
-  void shoudlDeleteExistingEvent() {
+  void shouldDeleteExistingEvent() {
     ResponseEntity<Void> response = restTemplate
         .exchange("/events/123", HttpMethod.DELETE, null, Void.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -146,9 +167,18 @@ class WmsServerApplicationTests {
     Number id = documentContext.read("$.id");
     assertThat(id).isEqualTo(123);
     String title = documentContext.read("$.title");
-    assertThat(title).isEqualTo("Updated title");
+    assertThat(title).isEqualTo("Updated Title");
     String description = documentContext.read("$.description");
-    assertThat(description).isEqualTo("Updated description");
+    assertThat(description).isEqualTo("Updated Description");
+    String eventDate = documentContext.read("$.eventDate");
+    assertThat(eventDate).isEqualTo("2025-09-14");
+    String eventTime = documentContext.read("$.eventTime");
+    assertThat(eventTime).isEqualTo("14:30:00");
+    String eventEndDate = documentContext.read("$.eventEndDate");
+    assertThat(eventEndDate).isEqualTo("2025-11-27");
+    String eventEndTime = documentContext.read("$.eventEndTime");
+    assertThat(eventEndTime).isEqualTo("23:59:00");
+
   }
 
   @Test

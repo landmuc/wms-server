@@ -59,10 +59,10 @@ public class EventController {
 
   @DeleteMapping("/{requestedId}")
   private ResponseEntity<Void> deleteEvent(@PathVariable Long requestedId) {
-    if (!eventService.deleteEventById(requestedId)) {
-      return ResponseEntity.notFound().build();
-    }
-    return ResponseEntity.noContent().build();
+      if (!eventService.deleteEventById(requestedId)) {
+        return ResponseEntity.notFound().build();
+      }
+      return ResponseEntity.noContent().build();
   }
 
   @PutMapping("/{requestedId}")

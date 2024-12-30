@@ -3,12 +3,7 @@ package com.landmuc.wms_server.event;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 // using class instead of record because database configurations (mostly) need an empty constructor which record does not provide
 @Entity
@@ -32,8 +27,10 @@ public class EventEntity {
   private LocalDate eventEndDate;
   @Column(name = "event_end_time")
   private LocalTime eventEndTime;
+  @Enumerated(EnumType.STRING)
   @Column(name = "event_status")
   private EventStatus eventStatus;
+  @Column(name = "is_followed")
   private boolean isFollowed;
 
   public EventEntity() {

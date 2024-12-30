@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS events (
     event_date DATE,
     event_time TIME,
     event_end_date DATE,
-    event_end_Time TIME,
-    eventStatus VARCHAR(255),
-    is_followed BOOlEAN DEFAULT FALSE,
+    event_end_time TIME,
+    event_status VARCHAR(255),
+    is_followed BOOLEAN DEFAULT FALSE
 );

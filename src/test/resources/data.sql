@@ -1,7 +1,7 @@
 INSERT INTO events (
-    id, 
-    title, 
-    description, 
+    id,
+    title,
+    description,
     date_created,
     time_created,
     event_date,
@@ -10,7 +10,7 @@ INSERT INTO events (
     event_end_time,
     event_status,
     is_followed
-) VALUES 
+) VALUES
 (
     123,
     'First Title',
