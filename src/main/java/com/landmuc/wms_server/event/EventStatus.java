@@ -7,6 +7,7 @@ public enum EventStatus {
 
   // TODO: Do I really need the eventStatusText? It is not needed for
   // (de-)serializaiton.
+
   private final String eventStatusText;
 
   private EventStatus(String eventStatusText) {

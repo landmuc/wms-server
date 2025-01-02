@@ -71,6 +71,7 @@ public class EventService {
 
     EventEntity updatedEventEntity = new Event(
         optionalEventEntity.get().getId(),
+        optionalEventEntity.get().getOwner(),
         updatedEvent.title(),
         updatedEvent.description(),
         optionalEventEntity.get().getDateCreated(),

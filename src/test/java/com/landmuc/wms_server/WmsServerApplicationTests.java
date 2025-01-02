@@ -32,6 +32,7 @@ class WmsServerApplicationTests {
   @Test
   void shouldReturnEventWithKnownId() {
     ResponseEntity<String> response = restTemplate
+        .withBasicAuth("userA", "a@123")
         .getForEntity("/events/123", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -96,6 +97,7 @@ class WmsServerApplicationTests {
   void shouldCreateANewEvent() {
     EventEntity eventEntity = new EventEntity(
         "New Created",
+        "userA",
         "New Description",
         LocalDate.of(2025, 9, 14), // eventDate
         LocalTime.of(14, 30), // eventTime

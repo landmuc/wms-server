@@ -1,5 +1,6 @@
 INSERT INTO events (
     id,
+    owner,
     title,
     description,
     date_created,
@@ -13,6 +14,7 @@ INSERT INTO events (
 ) VALUES
 (
     123,
+    'userA',
     'First Title',
     'First Description',
     '2024-10-12',
@@ -26,6 +28,7 @@ INSERT INTO events (
 ),
 (
     344,
+    'userA',
     'Second Title',
     'Second Description',
     '2024-08-13',
@@ -39,6 +42,7 @@ INSERT INTO events (
 ),
 (
     666,
+    'userC',
     'Third Title',
     'Third Description',
     '2024-10-30',

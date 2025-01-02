@@ -31,6 +31,7 @@ class EventJsonTest {
     events = Arrays.array(
         new Event(
             123L,
+            "userA",
             "First Title",
             "First Description",
             LocalDate.of(2024, 10, 12), // dateCreated
@@ -43,6 +44,7 @@ class EventJsonTest {
             true),
         new Event(
             344L,
+            "userA",
             "Second Title",
             "Second Description",
             LocalDate.of(2024, 8, 13), // dateCreated
@@ -55,6 +57,7 @@ class EventJsonTest {
             false),
         new Event(
             666L,
+            "userC",
             "Third Title",
             "Third Description",
             LocalDate.of(2024, 10, 30), // dateCreated
@@ -67,6 +70,8 @@ class EventJsonTest {
             true));
 
   }
+
+  // TODO: Test for owner / ownerUsername
 
   @Test
   void eventSerializationTest() throws IOException {
@@ -90,6 +95,7 @@ class EventJsonTest {
     String expected = """
         {
         "id": 123,
+        "owner": "userA",
         "title": "First Title",
         "description": "First Description",
         "dateCreated": "2024-10-12",
@@ -105,6 +111,7 @@ class EventJsonTest {
 
     Event event = new Event(
         123L,
+        "userA",
         "First Title",
         "First Description",
         LocalDate.of(2024, 10, 12), // dateCreated
@@ -136,6 +143,7 @@ class EventJsonTest {
                 [
                   {
           "id": 123,
+          "owner": "userA",
           "title": "First Title",
           "description": "First Description",
           "dateCreated": "2024-10-12",
@@ -149,6 +157,7 @@ class EventJsonTest {
         },
         {
           "id": 344,
+          "owner": "userA",
           "title": "Second Title",
           "description": "Second Description",
           "dateCreated": "2024-08-13",
@@ -162,6 +171,7 @@ class EventJsonTest {
         },
         {
           "id": 666,
+          "owner": "userC",
           "title": "Third Title",
           "description": "Third Description",
           "dateCreated": "2024-10-30",
