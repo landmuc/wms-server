@@ -1,6 +1,7 @@
 [
 {
   "id": 123,
+  "ownerUsername": "userA",
   "title": "First Title",
   "description": "First Description",
   "dateCreated": "2024-10-12",
@@ -14,6 +15,7 @@
 },
 {
   "id": 344,
+  "ownerUsername": "userA",
   "title": "Second Title",
   "description": "Second Description",
   "dateCreated": "2024-08-13",
@@ -27,6 +29,7 @@
 },
 {
   "id": 666,
+  "ownerUsername": "userC",
   "title": "Third Title",
   "description": "Third Description",
   "dateCreated": "2024-10-30",

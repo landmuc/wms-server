@@ -1,5 +1,6 @@
 package com.landmuc.wms_server.event;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,8 +54,8 @@ public class EventService {
     return eventRepository.save(event.toEventEntity());
   }
 
-  public boolean deleteEventById(Long requestedId) {
-    if (!eventRepository.existsById(requestedId)) {
+  public boolean deleteEventById(Long requestedId, Principal principal) {
+    if (!eventRepository.existsByIdAndOwnerUsername(requestedId, principal.getName())) {
       return false;
     }
     eventRepository.deleteById(requestedId);
@@ -71,7 +72,7 @@ public class EventService {
 
     EventEntity updatedEventEntity = new Event(
         optionalEventEntity.get().getId(),
-        optionalEventEntity.get().getOwner(),
+        optionalEventEntity.get().getownerUsername(),
         updatedEvent.title(),
         updatedEvent.description(),
         optionalEventEntity.get().getDateCreated(),

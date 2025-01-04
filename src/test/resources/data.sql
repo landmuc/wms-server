@@ -1,6 +1,6 @@
 INSERT INTO events (
     id,
-    owner,
+    owner_username,
     title,
     description,
     date_created,

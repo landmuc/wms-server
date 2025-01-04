@@ -71,18 +71,34 @@ class EventJsonTest {
 
   }
 
-  // TODO: Test for owner / ownerUsername
-
   @Test
   void eventSerializationTest() throws IOException {
     Event event = events[0];
     assertThat(json.write(event)).isStrictlyEqualToJson("singleEvent.json");
     assertThat(json.write(event)).hasJsonPathNumberValue("@.id");
     assertThat(json.write(event)).extractingJsonPathNumberValue("@.id").isEqualTo(123);
+    assertThat(json.write(event)).hasJsonPathStringValue("@.ownerUsername");
+    assertThat(json.write(event)).extractingJsonPathStringValue("@.ownerUsername").isEqualTo("userA");
     assertThat(json.write(event)).hasJsonPathStringValue("@.title");
     assertThat(json.write(event)).extractingJsonPathStringValue("@.title").isEqualTo("First Title");
     assertThat(json.write(event)).hasJsonPathStringValue("@.description");
     assertThat(json.write(event)).extractingJsonPathStringValue("@.description").isEqualTo("First Description");
+    assertThat(json.write(event)).hasJsonPathStringValue("@.dateCreated");
+    assertThat(json.write(event)).extractingJsonPathStringValue("@.dateCreated").isEqualTo("2024-10-12");
+    assertThat(json.write(event)).hasJsonPathStringValue("@.timeCreated");
+    assertThat(json.write(event)).extractingJsonPathStringValue("@.timeCreated").isEqualTo("10:38:00");
+    assertThat(json.write(event)).hasJsonPathStringValue("@.eventDate");
+    assertThat(json.write(event)).extractingJsonPathStringValue("@.eventDate").isEqualTo("2024-12-24");
+    assertThat(json.write(event)).hasJsonPathStringValue("@.eventTime");
+    assertThat(json.write(event)).extractingJsonPathStringValue("@.eventTime").isEqualTo("14:30:00");
+    assertThat(json.write(event)).hasJsonPathStringValue("@.eventEndDate");
+    assertThat(json.write(event)).extractingJsonPathStringValue("@.eventEndDate").isEqualTo("2025-11-17");
+    assertThat(json.write(event)).hasJsonPathStringValue("@.eventEndTime");
+    assertThat(json.write(event)).extractingJsonPathStringValue("@.eventEndTime").isEqualTo("23:59:00");
+    assertThat(json.write(event)).hasJsonPathStringValue("@.eventStatus");
+    assertThat(json.write(event)).extractingJsonPathStringValue("@.eventStatus").isEqualTo("ONGOING");
+    assertThat(json.write(event)).hasJsonPathBooleanValue("@.isFollowed");
+    assertThat(json.write(event)).extractingJsonPathBooleanValue("@.isFollowed").isEqualTo(true);
   }
 
   @Test
@@ -95,7 +111,7 @@ class EventJsonTest {
     String expected = """
         {
         "id": 123,
-        "owner": "userA",
+        "ownerUsername": "userA",
         "title": "First Title",
         "description": "First Description",
         "dateCreated": "2024-10-12",
@@ -124,9 +140,9 @@ class EventJsonTest {
         true);
     assertThat(json.parse(expected)).isEqualTo(event);
     assertThat(json.parseObject(expected).id()).isEqualTo(123);
+    assertThat(json.parseObject(expected).ownerUsername()).isEqualTo("userA");
     assertThat(json.parseObject(expected).title()).isEqualTo("First Title");
     assertThat(json.parseObject(expected).description()).isEqualTo("First Description");
-
     assertThat(json.parseObject(expected).dateCreated()).isEqualTo(LocalDate.of(2024, 10, 12));
     assertThat(json.parseObject(expected).timeCreated()).isEqualTo(LocalTime.of(10, 38));
     assertThat(json.parseObject(expected).eventDate()).isEqualTo("2024-12-24");
@@ -143,7 +159,7 @@ class EventJsonTest {
                 [
                   {
           "id": 123,
-          "owner": "userA",
+          "ownerUsername": "userA",
           "title": "First Title",
           "description": "First Description",
           "dateCreated": "2024-10-12",
@@ -157,7 +173,7 @@ class EventJsonTest {
         },
         {
           "id": 344,
-          "owner": "userA",
+          "ownerUsername": "userA",
           "title": "Second Title",
           "description": "Second Description",
           "dateCreated": "2024-08-13",
@@ -171,7 +187,7 @@ class EventJsonTest {
         },
         {
           "id": 666,
-          "owner": "userC",
+          "ownerUsername": "userC",
           "title": "Third Title",
           "description": "Third Description",
           "dateCreated": "2024-10-30",

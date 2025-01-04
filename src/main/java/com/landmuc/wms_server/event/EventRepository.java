@@ -9,4 +9,6 @@ public interface EventRepository extends JpaRepository<EventEntity, Long> {
   // Spring Data will automatically generate the implementation of the methods
   // below as long they are added to the Repository
 
+  boolean existsByIdAndOwnerUsername(Long id, String ownerUsername);
+
 }

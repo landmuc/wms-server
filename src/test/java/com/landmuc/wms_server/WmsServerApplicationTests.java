@@ -32,13 +32,15 @@ class WmsServerApplicationTests {
   @Test
   void shouldReturnEventWithKnownId() {
     ResponseEntity<String> response = restTemplate
-        .withBasicAuth("userA", "a@123")
+        .withBasicAuth("userC", "c@666")
         .getForEntity("/events/123", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     DocumentContext documentContext = JsonPath.parse(response.getBody());
     Number id = documentContext.read("$.id");
     assertThat(id).isEqualTo(123);
+    String ownerUsername = documentContext.read("$.ownerUsername");
+    assertThat(ownerUsername).isEqualTo("userA");
     String title = documentContext.read("$.title");
     assertThat(title).isEqualTo("First Title");
     String description = documentContext.read("$.description");
@@ -55,12 +57,12 @@ class WmsServerApplicationTests {
     assertThat(eventEndDate).isEqualTo("2025-11-17");
     String eventEndTime = documentContext.read("$.eventEndTime");
     assertThat(eventEndTime).isEqualTo("23:59:00");
-
   }
 
   @Test
   void shouldNotReturnEventWithUnknownId() {
     ResponseEntity<String> response = restTemplate
+        .withBasicAuth("userA", "a@123")
         .getForEntity("/events/9999", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
   }
@@ -68,6 +70,7 @@ class WmsServerApplicationTests {
   @Test
   void shouldReturnAllEventsWhenListIsRequested() {
     ResponseEntity<String> response = restTemplate
+        .withBasicAuth("userA", "a@123")
         .getForEntity("/events", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -85,6 +88,7 @@ class WmsServerApplicationTests {
   @Test
   void shouldReturnAPageOfEvents() {
     ResponseEntity<String> response = restTemplate
+        .withBasicAuth("userA", "a@123")
         .getForEntity("/events?page=0&size=1", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -96,8 +100,8 @@ class WmsServerApplicationTests {
   @Test
   void shouldCreateANewEvent() {
     EventEntity eventEntity = new EventEntity(
-        "New Created",
         "userA",
+        "New Created",
         "New Description",
         LocalDate.of(2025, 9, 14), // eventDate
         LocalTime.of(14, 30), // eventTime
@@ -106,17 +110,21 @@ class WmsServerApplicationTests {
         EventStatus.UPCOMING,
         true);
     ResponseEntity<Void> response = restTemplate
+        .withBasicAuth("userA", "a@123")
         .postForEntity("/events", eventEntity, Void.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
     URI locationOfNewEvent = response.getHeaders().getLocation();
     ResponseEntity<String> getResponse = restTemplate
+        .withBasicAuth("userA", "a@123")
         .getForEntity(locationOfNewEvent, String.class);
     assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
     Number id = documentContext.read("$.id");
     assertThat(id).isNotNull();
+    String ownerUsername = documentContext.read("$.ownerUsername");
+    assertThat(ownerUsername).isEqualTo("userA");
     String title = documentContext.read("$.title");
     assertThat(title).isEqualTo("New Created");
     String description = documentContext.read("$.description");
@@ -134,12 +142,14 @@ class WmsServerApplicationTests {
 
   @Test
   @DirtiesContext
-  void shouldDeleteExistingEvent() {
+  void shouldDeleteAnExistingEvent() {
     ResponseEntity<Void> response = restTemplate
+        .withBasicAuth("userA", "a@123")
         .exchange("/events/123", HttpMethod.DELETE, null, Void.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
     ResponseEntity<String> getResponse = restTemplate
+        .withBasicAuth("userA", "a@123")
         .getForEntity("/events/123", String.class);
     assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
   }
@@ -158,16 +168,20 @@ class WmsServerApplicationTests {
         true);
     HttpEntity<EventEntity> request = new HttpEntity<>(eventEntityUpdate);
     ResponseEntity<Void> response = restTemplate
+        .withBasicAuth("userA", "a@123")
         .exchange("/events/123", HttpMethod.PUT, request, Void.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
     ResponseEntity<String> getResponse = restTemplate
+        .withBasicAuth("userA", "a@123")
         .getForEntity("/events/123", String.class);
     assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
     Number id = documentContext.read("$.id");
     assertThat(id).isEqualTo(123);
+    String ownerUsername = documentContext.read("$.ownerUsername");
+    assertThat(ownerUsername).isEqualTo("userA");
     String title = documentContext.read("$.title");
     assertThat(title).isEqualTo("Updated Title");
     String description = documentContext.read("$.description");
@@ -196,6 +210,7 @@ class WmsServerApplicationTests {
         true);
     HttpEntity<EventEntity> request = new HttpEntity<>(eventEntityUpdate);
     ResponseEntity<Void> response = restTemplate
+        .withBasicAuth("userA", "a@123")
         .exchange("/events/9999", HttpMethod.PUT, request, Void.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
   }

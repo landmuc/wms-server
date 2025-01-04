@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS events (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    owner VARCHAR(255),
+    owner_username VARCHAR(255),
     title VARCHAR(255),
     description VARCHAR(255),
     date_created DATE DEFAULT CURRENT_DATE,

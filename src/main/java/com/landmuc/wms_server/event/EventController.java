@@ -1,6 +1,7 @@
 package com.landmuc.wms_server.event;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,11 +59,11 @@ public class EventController {
   }
 
   @DeleteMapping("/{requestedId}")
-  private ResponseEntity<Void> deleteEvent(@PathVariable Long requestedId) {
-      if (!eventService.deleteEventById(requestedId)) {
-        return ResponseEntity.notFound().build();
-      }
-      return ResponseEntity.noContent().build();
+  private ResponseEntity<Void> deleteEvent(@PathVariable Long requestedId, Principal principal) {
+    if (!eventService.deleteEventById(requestedId, principal)) {
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.noContent().build();
   }
 
   @PutMapping("/{requestedId}")

@@ -5,7 +5,7 @@ import java.time.LocalTime;
 
 public record Event(
     Long id,
-    String owner,
+    String ownerUsername,
     String title,
     String description,
     LocalDate dateCreated,
@@ -18,7 +18,7 @@ public record Event(
     boolean isFollowed) {
 
   public Event(
-      String owner,
+      String ownerUsername,
       String title,
       String description,
       LocalDate eventDate,
@@ -29,7 +29,7 @@ public record Event(
       boolean isFollowed) {
     this(
         null,
-        owner,
+        ownerUsername,
         title,
         description,
         null,
@@ -46,7 +46,7 @@ public record Event(
   public EventEntity toEventEntity() {
     return new EventEntity(
         this.id,
-        this.owner,
+        this.ownerUsername,
         this.title,
         this.description,
         this.dateCreated,

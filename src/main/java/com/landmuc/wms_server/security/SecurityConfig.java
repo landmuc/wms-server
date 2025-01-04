@@ -19,12 +19,14 @@ class SecurityConfig {
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests(request -> request
-            .requestMatchers("/events/**")
+            .requestMatchers("/**")
             .hasRole(AuthorityRole.USER.getAuthorityRoleAsString()))
         .httpBasic(Customizer.withDefaults()) // for basic request for APIs etc
         .formLogin(Customizer.withDefaults()) // adds a form login for the browser; does not work with stateless
                                               // sessions
-        .csrf(crsf -> crsf.disable());
+        .csrf(crsf -> crsf.disable())
+        .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())); // solves "localhost refusted
+                                                                                           // to connect" in h2-console
 
     return http.build();
   }

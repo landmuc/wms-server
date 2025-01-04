@@ -13,7 +13,8 @@ public class EventEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY: relies on the database to generate unique Ids.
                                                       // Commonly used with dbs like MySQL and PostgreSQL
   private Long id;
-  private String owner;
+  @Column(name = "owner_username")
+  private String ownerUsername;
   private String title;
   private String description;
   @Column(name = "date_created")
@@ -37,7 +38,7 @@ public class EventEntity {
   public EventEntity() {
   }
 
-  // Constructor without id, owner, dateCreated and timeCreated
+  // Constructor without id, ownerUsername, dateCreated and timeCreated
   public EventEntity(
       String title,
       String description,
@@ -60,7 +61,7 @@ public class EventEntity {
   //
   // Constructor without id dateCreated and timeCreated
   public EventEntity(
-      String owner,
+      String ownerUsername,
       String title,
       String description,
       LocalDate eventDate,
@@ -69,7 +70,7 @@ public class EventEntity {
       LocalTime eventEndTime,
       EventStatus eventStatus,
       boolean isFollowed) {
-    this.owner = owner;
+    this.ownerUsername = ownerUsername;
     this.title = title;
     this.description = description;
     this.eventDate = eventDate;
@@ -83,7 +84,7 @@ public class EventEntity {
   // Constructor with all instance variables
   public EventEntity(
       Long id,
-      String owner,
+      String ownerUsername,
       String title,
       String description,
       LocalDate dateCreated,
@@ -95,7 +96,7 @@ public class EventEntity {
       EventStatus eventStatus,
       boolean isFollowed) {
     this.id = id;
-    this.owner = owner;
+    this.ownerUsername = ownerUsername;
     this.title = title;
     this.description = description;
     this.dateCreated = dateCreated;
@@ -112,7 +113,7 @@ public class EventEntity {
   public Event toEvent() {
     return new Event(
         this.id,
-        this.owner,
+        this.ownerUsername,
         this.title,
         this.description,
         this.dateCreated,
@@ -130,8 +131,8 @@ public class EventEntity {
     return id;
   }
 
-  public String getOwner() {
-    return owner;
+  public String getownerUsername() {
+    return ownerUsername;
   }
 
   public String getTitle() {
