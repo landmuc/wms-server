@@ -58,7 +58,6 @@ public class EventEntity {
     this.isFollowed = isFollowed;
   }
 
-  //
   // Constructor without id dateCreated and timeCreated
   public EventEntity(
       String ownerUsername,
