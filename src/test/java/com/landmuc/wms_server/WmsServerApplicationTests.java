@@ -30,9 +30,10 @@ class WmsServerApplicationTests {
   TestRestTemplate restTemplate;
 
   @Test
-  void shouldReturnEventWithKnownId() {
+  void shouldReturnAnEventWithAKnownId() {
     ResponseEntity<String> response = restTemplate
-        .withBasicAuth("userC", "c@666")
+        .withBasicAuth("userC", "c@666") // to show that you can access the event
+        // even if you are not the owner
         .getForEntity("/events/123", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -60,7 +61,7 @@ class WmsServerApplicationTests {
   }
 
   @Test
-  void shouldNotReturnEventWithUnknownId() {
+  void shouldNotReturnAnEventWithAnUnknownId() {
     ResponseEntity<String> response = restTemplate
         .withBasicAuth("userA", "a@123")
         .getForEntity("/events/9999", String.class);
@@ -68,7 +69,28 @@ class WmsServerApplicationTests {
   }
 
   @Test
-  void shouldReturnAllEventsWhenListIsRequested() {
+  void shouldNotReturnAnEventWhenAccessingWithAnUnauthorizedRole() {
+    ResponseEntity<String> response = restTemplate
+        .withBasicAuth("userB", "b@344")
+        .getForEntity("/events/123", String.class);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+  }
+
+  @Test
+  void shouldNotReturnAnEventWhenUsingWrongCredentials() {
+    ResponseEntity<String> responseWrongUsername = restTemplate
+        .withBasicAuth("unkown_user", "a@123") // wrong username
+        .getForEntity("/events/123", String.class);
+    assertThat(responseWrongUsername.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+
+    ResponseEntity<String> responseWrongPassword = restTemplate
+        .withBasicAuth("userA", "wrong_password!") // wrong password
+        .getForEntity("/events/123", String.class);
+    assertThat(responseWrongPassword.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+  }
+
+  @Test
+  void shouldReturnAllEventsWhenAListIsRequested() {
     ResponseEntity<String> response = restTemplate
         .withBasicAuth("userA", "a@123")
         .getForEntity("/events", String.class);
@@ -82,7 +104,27 @@ class WmsServerApplicationTests {
     JSONArray titles = documentContext.read("$..title");
     assertThat(titles).containsExactlyInAnyOrder("First Title", "Second Title",
         "Third Title");
+  }
 
+  @Test
+  void shouldNotReturnEventsWhenAListIsRequestedWithAnUnauthorizedRole() {
+    ResponseEntity<String> response = restTemplate
+        .withBasicAuth("userB", "b@344")
+        .getForEntity("/events", String.class);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+  }
+
+  @Test
+  void shouldNotReturnEventsWhenAListIsRequestedAndUsingWrongCredentials() {
+    ResponseEntity<String> responseWrongUsername = restTemplate
+        .withBasicAuth("unkown_user", "a@123") // wrong username
+        .getForEntity("/events", String.class);
+    assertThat(responseWrongUsername.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+
+    ResponseEntity<String> responseWrongPassword = restTemplate
+        .withBasicAuth("userA", "wrong_password!") // wrong password
+        .getForEntity("/events", String.class);
+    assertThat(responseWrongPassword.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
   }
 
   @Test
@@ -98,6 +140,7 @@ class WmsServerApplicationTests {
   }
 
   @Test
+  @DirtiesContext
   void shouldCreateANewEvent() {
     EventEntity eventEntity = new EventEntity(
         "userA",
@@ -141,6 +184,48 @@ class WmsServerApplicationTests {
   }
 
   @Test
+  void shouldNotCreateANewEventWithAnUnauthorizedRole() {
+    EventEntity eventEntity = new EventEntity(
+        "userA",
+        "New Created",
+        "New Description",
+        LocalDate.of(2025, 9, 14), // eventDate
+        LocalTime.of(14, 30), // eventTime
+        LocalDate.of(2025, 11, 27), // eventEndDate
+        LocalTime.of(23, 59), // eventEndTime
+        EventStatus.UPCOMING,
+        true);
+    ResponseEntity<Void> response = restTemplate
+        .withBasicAuth("userB", "b@344")
+        .postForEntity("/events", eventEntity, Void.class);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+  }
+
+  @Test
+  void shouldNotCreateANewEventWhenUsingWrongCredentials() {
+    EventEntity eventEntity = new EventEntity(
+        "userA",
+        "New Created",
+        "New Description",
+        LocalDate.of(2025, 9, 14), // eventDate
+        LocalTime.of(14, 30), // eventTime
+        LocalDate.of(2025, 11, 27), // eventEndDate
+        LocalTime.of(23, 59), // eventEndTime
+        EventStatus.UPCOMING,
+        true);
+
+    ResponseEntity<Void> responseWrongUsername = restTemplate
+        .withBasicAuth("unkown_user", "b@344")
+        .postForEntity("/events", eventEntity, Void.class);
+    assertThat(responseWrongUsername.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+
+    ResponseEntity<Void> responseWrongPassword = restTemplate
+        .withBasicAuth("userB", "wrong_password!")
+        .postForEntity("/events", eventEntity, Void.class);
+    assertThat(responseWrongPassword.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+  }
+
+  @Test
   @DirtiesContext
   void shouldDeleteAnExistingEvent() {
     ResponseEntity<Void> response = restTemplate
@@ -152,6 +237,27 @@ class WmsServerApplicationTests {
         .withBasicAuth("userA", "a@123")
         .getForEntity("/events/123", String.class);
     assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+  }
+
+  @Test
+  void shouldNotDeleteAnExistingEventWithAnUnauthorizedRole() {
+    ResponseEntity<Void> response = restTemplate
+        .withBasicAuth("userB", "b@344")
+        .exchange("/events/123", HttpMethod.DELETE, null, Void.class);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+  }
+
+  @Test
+  void shouldNotDeleteAnExistingEventWhenUsingWrongCredentials() {
+    ResponseEntity<Void> responseWrongUsername = restTemplate
+        .withBasicAuth("unkown_user", "b@344")
+        .exchange("/events/123", HttpMethod.DELETE, null, Void.class);
+    assertThat(responseWrongUsername.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+
+    ResponseEntity<Void> responseWrongPassword = restTemplate
+        .withBasicAuth("userB", "wrong_password!")
+        .exchange("/events/123", HttpMethod.DELETE, null, Void.class);
+    assertThat(responseWrongPassword.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
   }
 
   @Test
@@ -167,6 +273,7 @@ class WmsServerApplicationTests {
         EventStatus.UPCOMING,
         true);
     HttpEntity<EventEntity> request = new HttpEntity<>(eventEntityUpdate);
+
     ResponseEntity<Void> response = restTemplate
         .withBasicAuth("userA", "a@123")
         .exchange("/events/123", HttpMethod.PUT, request, Void.class);
@@ -194,7 +301,49 @@ class WmsServerApplicationTests {
     assertThat(eventEndDate).isEqualTo("2025-11-27");
     String eventEndTime = documentContext.read("$.eventEndTime");
     assertThat(eventEndTime).isEqualTo("23:59:00");
+  }
 
+  @Test
+  void shouldNotUpdateAnEventWithAnUnauthorizedRole() {
+    EventEntity eventEntityUpdate = new EventEntity(
+        "Updated Title",
+        "Updated Description",
+        LocalDate.of(2025, 9, 14), // eventDate
+        LocalTime.of(14, 30), // eventTime
+        LocalDate.of(2025, 11, 27), // eventEndDate
+        LocalTime.of(23, 59), // eventEndTime
+        EventStatus.UPCOMING,
+        true);
+    HttpEntity<EventEntity> request = new HttpEntity<>(eventEntityUpdate);
+
+    ResponseEntity<Void> response = restTemplate
+        .withBasicAuth("userB", "b@344")
+        .exchange("/events/123", HttpMethod.PUT, request, Void.class);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+  }
+
+  @Test
+  void shouldNotUpdateAnEventWhenUsingWrongCredentials() {
+    EventEntity eventEntityUpdate = new EventEntity(
+        "Updated Title",
+        "Updated Description",
+        LocalDate.of(2025, 9, 14), // eventDate
+        LocalTime.of(14, 30), // eventTime
+        LocalDate.of(2025, 11, 27), // eventEndDate
+        LocalTime.of(23, 59), // eventEndTime
+        EventStatus.UPCOMING,
+        true);
+    HttpEntity<EventEntity> request = new HttpEntity<>(eventEntityUpdate);
+
+    ResponseEntity<Void> responseWrongUsername = restTemplate
+        .withBasicAuth("unkown_user", "a@123")
+        .exchange("/events/123", HttpMethod.PUT, request, Void.class);
+    assertThat(responseWrongUsername.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+
+    ResponseEntity<Void> responseWrongPassword = restTemplate
+        .withBasicAuth("userA", "wrong_password!")
+        .exchange("/events/123", HttpMethod.PUT, request, Void.class);
+    assertThat(responseWrongPassword.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
   }
 
   @Test

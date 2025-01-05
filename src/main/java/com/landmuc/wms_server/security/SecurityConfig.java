@@ -19,11 +19,9 @@ class SecurityConfig {
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests(request -> request
-            .requestMatchers("/**")
-            .hasRole(AuthorityRole.USER.getAuthorityRoleAsString()))
+            .requestMatchers("/events/**").hasRole(AuthorityRole.USER.getAuthorityRoleAsString())
+            .requestMatchers("/h2-console/**").permitAll())
         .httpBasic(Customizer.withDefaults()) // for basic request for APIs etc
-        .formLogin(Customizer.withDefaults()) // adds a form login for the browser; does not work with stateless
-                                              // sessions
         .csrf(crsf -> crsf.disable())
         .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())); // solves "localhost refusted
                                                                                            // to connect" in h2-console
