@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "events")
 public class EventEntity {
+  // ---------- INSTANCE VARIABLES ----------
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY: relies on the database to generate unique Ids.
                                                       // Commonly used with dbs like MySQL and PostgreSQL
@@ -35,6 +36,7 @@ public class EventEntity {
   @Column(name = "is_followed")
   private boolean isFollowed;
 
+  // ---------- CONSTRUCTORS ----------
   public EventEntity() {
   }
 
@@ -108,7 +110,7 @@ public class EventEntity {
     this.isFollowed = isFollowed;
   }
 
-  // Event Mapper
+  // ---------- MAPPERS ----------
   public Event toEvent() {
     return new Event(
         this.id,
@@ -125,7 +127,7 @@ public class EventEntity {
         this.isFollowed);
   }
 
-  // Getters (and Setters)
+  // ---------- GETTERS (AND SETTERS) ----------
   public Long getId() {
     return id;
   }

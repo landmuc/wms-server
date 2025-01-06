@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public record Event(
+    // ---------- INSTANCE VARIABLES ----------
     Long id,
     String ownerUsername,
     String title,
@@ -17,6 +18,8 @@ public record Event(
     EventStatus eventStatus,
     boolean isFollowed) {
 
+  // TODO: DELETE Constructor?
+  // ---------- CONSTRUCTORS ----------
   public Event(
       String ownerUsername,
       String title,
@@ -42,7 +45,7 @@ public record Event(
         isFollowed);
   }
 
-  // EventEntity Mapper
+  // ---------- MAPPERS ----------
   public EventEntity toEventEntity() {
     return new EventEntity(
         this.id,
