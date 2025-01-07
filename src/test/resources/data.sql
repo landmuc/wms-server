@@ -54,3 +54,16 @@ INSERT INTO events (
     'UPCOMING',
     true
 );
+
+INSERT INTO users (id, username, authority_role, date_created, followed_events)
+VALUES (
+    '550e8400-e29b-41d4-a716-446655440000',
+    'john_doe',
+    'USER',
+    CURRENT_DATE,
+    ARRAY[
+        '123e4567-e89b-12d3-a456-426614174000',
+        '987fcdeb-51d2-3a45-b789-012345678901',
+        'abc12345-6789-def0-1234-567890123456'
+    ] -- This works despite of the error
+);

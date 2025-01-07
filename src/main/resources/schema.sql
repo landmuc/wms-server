@@ -12,3 +12,11 @@ CREATE TABLE IF NOT EXISTS events (
     event_status VARCHAR(255),
     is_followed BOOLEAN DEFAULT FALSE
 );
+
+CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY,
+    username VARCHAR(255),
+    authority_role VARCHAR(255),
+    date_created DATE,
+    followed_events UUID ARRAY -- This works despite of the error
+);

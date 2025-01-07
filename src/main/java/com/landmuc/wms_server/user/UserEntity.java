@@ -2,8 +2,8 @@ package com.landmuc.wms_server.user;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
-import com.landmuc.wms_server.event.EventEntity;
 import com.landmuc.wms_server.security.AuthorityRole;
 
 import jakarta.persistence.Column;
@@ -21,7 +21,7 @@ public class UserEntity {
   // ---------- INSTANCE VARIABLES ----------
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private UUID id = UUID.randomUUID();
   private String username;
   @Column(name = "hashed_password")
   private String hashedPassword;
@@ -36,20 +36,6 @@ public class UserEntity {
   public UserEntity() {
   }
 
-  // Constructor without password for mapping
-  public UserEntity(
-      Long id,
-      String username,
-      AuthorityRole authorityRole,
-      LocalDate dateCreated,
-      List<Long> followedEvents) {
-    this.id = id;
-    this.username = username;
-    this.authorityRole = authorityRole;
-    this.dateCreated = dateCreated;
-    this.followedEvents = followedEvents;
-  }
-
   // Constructor without id and date_created
   public UserEntity(
       String username,
@@ -62,9 +48,23 @@ public class UserEntity {
     this.followedEvents = followedEvents;
   }
 
+  // Constructor without password for mapping
+  public UserEntity(
+      UUID id,
+      String username,
+      AuthorityRole authorityRole,
+      LocalDate dateCreated,
+      List<Long> followedEvents) {
+    this.id = id;
+    this.username = username;
+    this.authorityRole = authorityRole;
+    this.dateCreated = dateCreated;
+    this.followedEvents = followedEvents;
+  }
+
   // Constructor with all instance variables
   public UserEntity(
-      Long id,
+      UUID id,
       String username,
       String hashedPassword,
       AuthorityRole authorityRole,
@@ -81,7 +81,7 @@ public class UserEntity {
   // ---------- MAPPERS ----------
 
   // ---------- GETTERS (AND SETTERS) ----------
-  public Long getId() {
+  public UUID getId() {
     return this.id;
   }
 
