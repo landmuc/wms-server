@@ -79,6 +79,14 @@ public class UserEntity {
   }
 
   // ---------- MAPPERS ----------
+  public User toUser() {
+    return new User(
+        this.id,
+        this.username,
+        this.authorityRole,
+        this.dateCreated,
+        this.followedEvents);
+  }
 
   // ---------- GETTERS (AND SETTERS) ----------
   public UUID getId() {
