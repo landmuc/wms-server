@@ -1,4 +1,4 @@
-# wms-server - Spring Boackend API
+# wms-server - Spring Backend API
 
 A Spring Boot backend application developed using Test-Driven Development (TDD) principles. This service is designed to replace [Supabase](https://supabase.com/) as the backend for an [Android application](https://github.com/landmuc/wms).
 
