@@ -1,4 +1,4 @@
-package com.landmuc.wms_server;
+package com.landmuc.wms_server.event;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class WmsServerApplicationTests {
+class EventIntegrationTests {
 
   @Autowired
   TestRestTemplate restTemplate;

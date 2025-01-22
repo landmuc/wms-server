@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS events (
 );
 
 CREATE TABLE IF NOT EXISTS users (
-    id UUID PRIMARY KEY,
+    id Long PRIMARY KEY,
     username VARCHAR(255),
     authority_role VARCHAR(255),
     date_created DATE,

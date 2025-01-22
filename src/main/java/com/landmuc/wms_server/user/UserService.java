@@ -15,13 +15,13 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-  public User getUserById(UUID requestedId) {
-    Optional<UserEntity> userEntity = userRepository.findById(requestedId);
+  public User findUserById(Long requestedId) {
+    Optional<UserEntity> optionalUserEntity = userRepository.findById(requestedId);
 
-    if (userEntity.isEmpty()) {
+    if (optionalUserEntity.isEmpty()) {
       return null;
     }
-    return userEntity.get().toUser();
+    return optionalUserEntity.get().toUser();
   }
 
 }

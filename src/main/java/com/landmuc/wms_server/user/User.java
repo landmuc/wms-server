@@ -8,24 +8,27 @@ import com.landmuc.wms_server.security.AuthorityRole;
 
 // hashedPassword for security reasons not included
 public record User(
-    UUID id,
+    Long id,
     String username,
     AuthorityRole authorityRole,
-    LocalDate dateCreated,
-    List<Long> followedEvents) {
+    LocalDate dateCreated
+// List<Long> followedEvents
+) {
 
   // TODO: DELETE Constructor?
   // ---------- CONSTRUCTORS ----------
   public User(
       String username,
-      AuthorityRole authorityRole,
-      List<Long> followedEvents) {
+      AuthorityRole authorityRole
+  // List<Long> followedEvents
+  ) {
     this(
         null,
         username,
         authorityRole,
-        null,
-        followedEvents);
+        null
+    // followedEvents
+    );
   }
 
   // ---------- MAPPERS ----------
@@ -34,8 +37,9 @@ public record User(
         this.id,
         this.username,
         this.authorityRole,
-        this.dateCreated,
-        this.followedEvents);
+        this.dateCreated
+    // this.followedEvents
+    );
   }
 
 }

@@ -45,8 +45,7 @@ tasks.test {
         exceptionFormat = TestExceptionFormat.FULL
         showCauses = true
         showStackTraces = true
-        // Change to `true` for more verbose test output
-        showStandardStreams = false
+        showStandardStreams = false // Change to `true` for more verbose test output
     }
 }
 

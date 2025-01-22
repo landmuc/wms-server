@@ -21,7 +21,8 @@ public class UserEntity {
   // ---------- INSTANCE VARIABLES ----------
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private UUID id = UUID.randomUUID();
+  private Long id;
+  // private UUID id = UUID.randomUUID();
   private String username;
   @Column(name = "hashed_password")
   private String hashedPassword;
@@ -30,7 +31,7 @@ public class UserEntity {
   private AuthorityRole authorityRole;
   @Column(name = "date_created")
   private LocalDate dateCreated;
-  private List<Long> followedEvents;
+  // private List<Long> followedEvents;
 
   // ---------- CONSTRUCTORS ----------
   public UserEntity() {
@@ -40,42 +41,45 @@ public class UserEntity {
   public UserEntity(
       String username,
       String hashedPassword,
-      AuthorityRole authorityRole,
-      List<Long> followedEvents) {
+      AuthorityRole authorityRole
+  // List<Long> followedEvents
+  ) {
     this.username = username;
     this.hashedPassword = hashedPassword;
     this.authorityRole = authorityRole;
-    this.followedEvents = followedEvents;
+    // this.followedEvents = followedEvents;
   }
 
   // Constructor without password for mapping
   public UserEntity(
-      UUID id,
+      Long id,
       String username,
       AuthorityRole authorityRole,
-      LocalDate dateCreated,
-      List<Long> followedEvents) {
+      LocalDate dateCreated
+  // List<Long> followedEvents
+  ) {
     this.id = id;
     this.username = username;
     this.authorityRole = authorityRole;
     this.dateCreated = dateCreated;
-    this.followedEvents = followedEvents;
+    // this.followedEvents = followedEvents;
   }
 
   // Constructor with all instance variables
   public UserEntity(
-      UUID id,
+      Long id,
       String username,
       String hashedPassword,
       AuthorityRole authorityRole,
-      LocalDate dateCreated,
-      List<Long> followedEvents) {
+      LocalDate dateCreated
+  // List<Long> followedEvents
+  ) {
     this.id = id;
     this.username = username;
     this.hashedPassword = hashedPassword;
     this.authorityRole = authorityRole;
     this.dateCreated = dateCreated;
-    this.followedEvents = followedEvents;
+    // this.followedEvents = followedEvents;
   }
 
   // ---------- MAPPERS ----------
@@ -84,12 +88,13 @@ public class UserEntity {
         this.id,
         this.username,
         this.authorityRole,
-        this.dateCreated,
-        this.followedEvents);
+        this.dateCreated
+    // this.followedEvents
+    );
   }
 
   // ---------- GETTERS (AND SETTERS) ----------
-  public UUID getId() {
+  public Long getId() {
     return this.id;
   }
 
@@ -109,8 +114,8 @@ public class UserEntity {
     return dateCreated;
   }
 
-  public List<Long> getFollowedEvents() {
-    return followedEvents;
-  }
+  // public List<Long> getFollowedEvents() {
+  // return followedEvents;
+  // }
 
 }
