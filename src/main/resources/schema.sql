@@ -14,9 +14,9 @@ CREATE TABLE IF NOT EXISTS events (
 );
 
 CREATE TABLE IF NOT EXISTS users (
-    id Long PRIMARY KEY,
+    id UUID PRIMARY KEY,
     username VARCHAR(255),
     authority_role VARCHAR(255),
-    date_created DATE,
-    followed_events UUID ARRAY -- This works despite of the error
+    date_created DATE
+    --followed_events UUID ARRAY -- This works despite of the error
 );

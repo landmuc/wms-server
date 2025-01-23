@@ -21,8 +21,7 @@ public class UserEntity {
   // ---------- INSTANCE VARIABLES ----------
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-  // private UUID id = UUID.randomUUID();
+  private UUID id = UUID.randomUUID();
   private String username;
   @Column(name = "hashed_password")
   private String hashedPassword;
@@ -52,7 +51,7 @@ public class UserEntity {
 
   // Constructor without password for mapping
   public UserEntity(
-      Long id,
+      UUID id,
       String username,
       AuthorityRole authorityRole,
       LocalDate dateCreated
@@ -67,7 +66,7 @@ public class UserEntity {
 
   // Constructor with all instance variables
   public UserEntity(
-      Long id,
+      UUID id,
       String username,
       String hashedPassword,
       AuthorityRole authorityRole,
@@ -94,7 +93,7 @@ public class UserEntity {
   }
 
   // ---------- GETTERS (AND SETTERS) ----------
-  public Long getId() {
+  public UUID getId() {
     return this.id;
   }
 

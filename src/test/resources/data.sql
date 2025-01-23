@@ -58,8 +58,8 @@ INSERT INTO events (
 --add followed_events
 INSERT INTO users (id, username, authority_role, date_created)
 VALUES (
-    --'550e8400-e29b-41d4-a716-446655440000',
-    5555,
+    '550e8400-e29b-41d4-a716-446655440000',
+    -- 5555,
     'john_doe',
     'USER',
     CURRENT_DATE

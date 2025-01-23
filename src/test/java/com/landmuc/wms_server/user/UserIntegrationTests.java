@@ -20,7 +20,7 @@ class UserIntegrationTests {
 
     ResponseEntity<String> response = restTemplate
         .withBasicAuth("userA", "a@123")
-        .getForEntity("/users/5555", String.class);
+        .getForEntity("/users/550e8400-e29b-41d4-a716-446655440000", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
   }

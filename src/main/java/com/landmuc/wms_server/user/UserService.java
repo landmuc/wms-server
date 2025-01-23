@@ -15,7 +15,7 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-  public User findUserById(Long requestedId) {
+  public User findUserById(UUID requestedId) {
     Optional<UserEntity> optionalUserEntity = userRepository.findById(requestedId);
 
     if (optionalUserEntity.isEmpty()) {

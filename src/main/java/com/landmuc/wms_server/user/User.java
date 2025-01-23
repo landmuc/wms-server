@@ -8,7 +8,7 @@ import com.landmuc.wms_server.security.AuthorityRole;
 
 // hashedPassword for security reasons not included
 public record User(
-    Long id,
+    UUID id,
     String username,
     AuthorityRole authorityRole,
     LocalDate dateCreated
