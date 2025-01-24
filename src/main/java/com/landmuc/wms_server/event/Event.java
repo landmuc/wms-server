@@ -2,10 +2,11 @@ package com.landmuc.wms_server.event;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 public record Event(
     // ---------- INSTANCE VARIABLES ----------
-    Long id,
+    UUID id,
     String ownerUsername,
     String title,
     String description,

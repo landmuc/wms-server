@@ -2,6 +2,7 @@ package com.landmuc.wms_server.event;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 import jakarta.persistence.*;
 
@@ -13,7 +14,7 @@ public class EventEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY: relies on the database to generate unique Ids.
                                                       // Commonly used with dbs like MySQL and PostgreSQL
-  private Long id;
+  private UUID id = UUID.randomUUID();
   @Column(name = "owner_username")
   private String ownerUsername;
   private String title;
@@ -78,7 +79,7 @@ public class EventEntity {
 
   // Constructor with all instance variables
   public EventEntity(
-      Long id,
+      UUID id,
       String ownerUsername,
       String title,
       String description,
@@ -119,7 +120,7 @@ public class EventEntity {
   }
 
   // ---------- GETTERS (AND SETTERS) ----------
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 

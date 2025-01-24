@@ -3,6 +3,7 @@ package com.landmuc.wms_server.event;
 import java.net.URI;
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +29,7 @@ public class EventController {
   }
 
   @GetMapping("/{requestedId}")
-  private ResponseEntity<Event> findEventById(@PathVariable Long requestedId) {
+  private ResponseEntity<Event> findEventById(@PathVariable UUID requestedId) {
     Event event = eventService.findEventById(requestedId);
 
     if (event == null) {
@@ -59,7 +60,7 @@ public class EventController {
   }
 
   @DeleteMapping("/{requestedId}")
-  private ResponseEntity<Void> deleteEvent(@PathVariable Long requestedId, Principal principal) {
+  private ResponseEntity<Void> deleteEvent(@PathVariable UUID requestedId, Principal principal) {
     if (!eventService.deleteEventById(requestedId, principal)) {
       return ResponseEntity.notFound().build();
     }
@@ -67,7 +68,7 @@ public class EventController {
   }
 
   @PutMapping("/{requestedId}")
-  private ResponseEntity<Void> updateEvent(@PathVariable Long requestedId, @RequestBody Event updatedEvent) {
+  private ResponseEntity<Void> updateEvent(@PathVariable UUID requestedId, @RequestBody Event updatedEvent) {
     EventEntity eventEntity = eventService.updateEvent(requestedId, updatedEvent);
 
     if (eventEntity == null) {

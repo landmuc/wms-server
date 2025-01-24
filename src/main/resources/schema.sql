@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS events (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id UUID PRIMARY KEY,
     owner_username VARCHAR(255),
     title VARCHAR(255),
     description VARCHAR(255),
@@ -17,4 +17,4 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(255),
     authority_role VARCHAR(255),
     date_created DATE
-);
+)

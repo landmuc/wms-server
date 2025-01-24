@@ -12,7 +12,7 @@ INSERT INTO events (
     event_status
 ) VALUES
 (
-    123,
+    'f47ac10b-58cc-4372-a567-0e02b2c3d479', -- Long 123 old id
     'userA',
     'First Title',
     'First Description',
@@ -25,7 +25,7 @@ INSERT INTO events (
     'ONGOING'
 ),
 (
-    344,
+    '38400000-8cf0-11bd-b23e-10b96e4ef00d', -- Long 344 old id
     'userA',
     'Second Title',
     'Second Description',
@@ -38,7 +38,7 @@ INSERT INTO events (
     'OVER'
 ),
 (
-    666,
+    'a22c9092-5983-4111-b11e-6bf41c53a22c', -- Long 666 old id
     'userC',
     'Third Title',
     'Third Description',
