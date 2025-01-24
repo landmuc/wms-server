@@ -58,6 +58,8 @@ class EventIntegrationTests {
     assertThat(eventEndDate).isEqualTo("2025-11-17");
     String eventEndTime = documentContext.read("$.eventEndTime");
     assertThat(eventEndTime).isEqualTo("23:59:00");
+    String eventStatus = documentContext.read("$.eventStatus");
+    assertThat(eventStatus).isEqualTo("ONGOING");
   }
 
   @Test
@@ -150,8 +152,7 @@ class EventIntegrationTests {
         LocalTime.of(14, 30), // eventTime
         LocalDate.of(2025, 11, 27), // eventEndDate
         LocalTime.of(23, 59), // eventEndTime
-        EventStatus.UPCOMING,
-        true);
+        EventStatus.UPCOMING);
     ResponseEntity<Void> response = restTemplate
         .withBasicAuth("userA", "a@123")
         .postForEntity("/events", eventEntity, Void.class);
@@ -180,6 +181,8 @@ class EventIntegrationTests {
     assertThat(eventEndDate).isEqualTo("2025-11-27");
     String eventEndTime = documentContext.read("$.eventEndTime");
     assertThat(eventEndTime).isEqualTo("23:59:00");
+    String eventStatus = documentContext.read("$.eventStatus");
+    assertThat(eventStatus).isEqualTo("UPCOMING");
 
   }
 
@@ -193,8 +196,7 @@ class EventIntegrationTests {
         LocalTime.of(14, 30), // eventTime
         LocalDate.of(2025, 11, 27), // eventEndDate
         LocalTime.of(23, 59), // eventEndTime
-        EventStatus.UPCOMING,
-        true);
+        EventStatus.UPCOMING);
     ResponseEntity<Void> response = restTemplate
         .withBasicAuth("userB", "b@344")
         .postForEntity("/events", eventEntity, Void.class);
@@ -211,8 +213,7 @@ class EventIntegrationTests {
         LocalTime.of(14, 30), // eventTime
         LocalDate.of(2025, 11, 27), // eventEndDate
         LocalTime.of(23, 59), // eventEndTime
-        EventStatus.UPCOMING,
-        true);
+        EventStatus.UPCOMING);
 
     ResponseEntity<Void> responseWrongUsername = restTemplate
         .withBasicAuth("unkown_user", "b@344")
@@ -270,8 +271,7 @@ class EventIntegrationTests {
         LocalTime.of(14, 30), // eventTime
         LocalDate.of(2025, 11, 27), // eventEndDate
         LocalTime.of(23, 59), // eventEndTime
-        EventStatus.UPCOMING,
-        true);
+        EventStatus.UPCOMING);
     HttpEntity<EventEntity> request = new HttpEntity<>(eventEntityUpdate);
 
     ResponseEntity<Void> response = restTemplate
@@ -301,6 +301,9 @@ class EventIntegrationTests {
     assertThat(eventEndDate).isEqualTo("2025-11-27");
     String eventEndTime = documentContext.read("$.eventEndTime");
     assertThat(eventEndTime).isEqualTo("23:59:00");
+    String eventStatus = documentContext.read("$.eventStatus");
+    assertThat(eventStatus).isEqualTo("UPCOMING");
+
   }
 
   @Test
@@ -312,8 +315,7 @@ class EventIntegrationTests {
         LocalTime.of(14, 30), // eventTime
         LocalDate.of(2025, 11, 27), // eventEndDate
         LocalTime.of(23, 59), // eventEndTime
-        EventStatus.UPCOMING,
-        true);
+        EventStatus.UPCOMING);
     HttpEntity<EventEntity> request = new HttpEntity<>(eventEntityUpdate);
 
     ResponseEntity<Void> response = restTemplate
@@ -331,8 +333,7 @@ class EventIntegrationTests {
         LocalTime.of(14, 30), // eventTime
         LocalDate.of(2025, 11, 27), // eventEndDate
         LocalTime.of(23, 59), // eventEndTime
-        EventStatus.UPCOMING,
-        true);
+        EventStatus.UPCOMING);
     HttpEntity<EventEntity> request = new HttpEntity<>(eventEntityUpdate);
 
     ResponseEntity<Void> responseWrongUsername = restTemplate
@@ -355,8 +356,7 @@ class EventIntegrationTests {
         LocalTime.of(14, 30), // eventTime
         LocalDate.of(2025, 11, 27), // eventEndDate
         LocalTime.of(23, 59), // eventEndTime
-        EventStatus.UPCOMING,
-        true);
+        EventStatus.UPCOMING);
     HttpEntity<EventEntity> request = new HttpEntity<>(eventEntityUpdate);
     ResponseEntity<Void> response = restTemplate
         .withBasicAuth("userA", "a@123")

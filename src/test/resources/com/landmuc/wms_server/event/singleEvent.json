@@ -9,6 +9,5 @@
   "eventTime": "14:30:00",
   "eventEndDate": "2025-11-17",
   "eventEndTime": "23:59:00",
-  "eventStatus": "ONGOING",
-  "isFollowed": true
+  "eventStatus": "ONGOING"
 }

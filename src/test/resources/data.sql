@@ -9,8 +9,7 @@ INSERT INTO events (
     event_time,
     event_end_date,
     event_end_time,
-    event_status,
-    is_followed
+    event_status
 ) VALUES
 (
     123,
@@ -23,8 +22,7 @@ INSERT INTO events (
     '14:30:00',
     '2025-11-17',
     '23:59:00',
-    'ONGOING',
-    true
+    'ONGOING'
 ),
 (
     344,
@@ -37,8 +35,7 @@ INSERT INTO events (
     '20:00:00',
     '2024-10-08',
     '11:59:00',
-    'OVER',
-    false
+    'OVER'
 ),
 (
     666,
@@ -51,21 +48,14 @@ INSERT INTO events (
     '12:00:00',
     '2025-12-24',
     '17:00:00',
-    'UPCOMING',
-    true
+    'UPCOMING'
 );
 
 --add followed_events
 INSERT INTO users (id, username, authority_role, date_created)
 VALUES (
     '550e8400-e29b-41d4-a716-446655440000',
-    -- 5555,
     'john_doe',
     'USER',
-    CURRENT_DATE
-    -- ARRAY[
-    --     '123e4567-e89b-12d3-a456-426614174000',
-    --     '987fcdeb-51d2-3a45-b789-012345678901',
-    --     'abc12345-6789-def0-1234-567890123456'
-    -- ] -- This works despite of the error
+    '2025-01-10'
 );

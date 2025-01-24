@@ -40,8 +40,7 @@ class EventJsonTest {
             LocalTime.of(14, 30), // eventTime
             LocalDate.of(2025, 11, 17), // eventEndDate
             LocalTime.of(23, 59), // eventEndTime
-            EventStatus.ONGOING,
-            true),
+            EventStatus.ONGOING),
         new Event(
             344L,
             "userA",
@@ -53,8 +52,7 @@ class EventJsonTest {
             LocalTime.of(20, 0), // eventTime
             LocalDate.of(2024, 10, 8), // eventEndDate
             LocalTime.of(11, 59), // eventEndTime
-            EventStatus.OVER,
-            false),
+            EventStatus.OVER),
         new Event(
             666L,
             "userC",
@@ -66,8 +64,7 @@ class EventJsonTest {
             LocalTime.of(12, 0), // eventTime
             LocalDate.of(2025, 12, 24), // eventEndDate
             LocalTime.of(17, 00), // eventEndTime
-            EventStatus.UPCOMING,
-            true));
+            EventStatus.UPCOMING));
 
   }
 
@@ -97,8 +94,6 @@ class EventJsonTest {
     assertThat(json.write(event)).extractingJsonPathStringValue("@.eventEndTime").isEqualTo("23:59:00");
     assertThat(json.write(event)).hasJsonPathStringValue("@.eventStatus");
     assertThat(json.write(event)).extractingJsonPathStringValue("@.eventStatus").isEqualTo("ONGOING");
-    assertThat(json.write(event)).hasJsonPathBooleanValue("@.isFollowed");
-    assertThat(json.write(event)).extractingJsonPathBooleanValue("@.isFollowed").isEqualTo(true);
   }
 
   @Test
@@ -120,8 +115,7 @@ class EventJsonTest {
         "eventTime": "14:30:00",
         "eventEndDate": "2025-11-17",
         "eventEndTime": "23:59:00",
-        "eventStatus": "ONGOING",
-        "isFollowed": true
+        "eventStatus": "ONGOING"
         }
         """;
 
@@ -136,8 +130,7 @@ class EventJsonTest {
         LocalTime.of(14, 30), // eventTime
         LocalDate.of(2025, 11, 17), // eventEndDate
         LocalTime.of(23, 59), // eventEndTime
-        EventStatus.ONGOING,
-        true);
+        EventStatus.ONGOING);
     assertThat(json.parse(expected)).isEqualTo(event);
     assertThat(json.parseObject(expected).id()).isEqualTo(123);
     assertThat(json.parseObject(expected).ownerUsername()).isEqualTo("userA");
@@ -150,7 +143,6 @@ class EventJsonTest {
     assertThat(json.parseObject(expected).eventEndDate()).isEqualTo("2025-11-17");
     assertThat(json.parseObject(expected).eventEndTime()).isEqualTo("23:59:00");
     assertThat(json.parseObject(expected).eventStatus()).isEqualTo(EventStatus.ONGOING);
-    assertThat(json.parseObject(expected).isFollowed()).isEqualTo(true);
   }
 
   @Test
@@ -168,8 +160,7 @@ class EventJsonTest {
           "eventTime": "14:30:00",
           "eventEndDate": "2025-11-17",
           "eventEndTime": "23:59:00",
-          "eventStatus": "ONGOING",
-          "isFollowed": true
+          "eventStatus": "ONGOING"
         },
         {
           "id": 344,
@@ -182,8 +173,7 @@ class EventJsonTest {
           "eventTime": "20:00:00",
           "eventEndDate": "2024-10-08",
           "eventEndTime": "11:59:00",
-          "eventStatus": "OVER",
-          "isFollowed": false
+          "eventStatus": "OVER"
         },
         {
           "id": 666,
@@ -196,8 +186,7 @@ class EventJsonTest {
           "eventTime": "12:00:00",
           "eventEndDate": "2025-12-24",
           "eventEndTime": "17:00:00",
-          "eventStatus": "UPCOMING",
-          "isFollowed": true
+          "eventStatus": "UPCOMING"
         }
                 ]
                     """;

@@ -15,10 +15,9 @@ public record Event(
     LocalTime eventTime,
     LocalDate eventEndDate,
     LocalTime eventEndTime,
-    EventStatus eventStatus,
-    boolean isFollowed) {
+    EventStatus eventStatus) {
 
-  // TODO: DELETE Constructor?
+  // TODO: DELETE Constructor? Is used in EventJsonTest.java
   // ---------- CONSTRUCTORS ----------
   public Event(
       String ownerUsername,
@@ -28,8 +27,7 @@ public record Event(
       LocalTime eventTime,
       LocalDate eventEndDate,
       LocalTime eventEndTime,
-      EventStatus eventStatus,
-      boolean isFollowed) {
+      EventStatus eventStatus) {
     this(
         null,
         ownerUsername,
@@ -41,8 +39,7 @@ public record Event(
         eventTime,
         eventEndDate,
         eventEndTime,
-        eventStatus,
-        isFollowed);
+        eventStatus);
   }
 
   // ---------- MAPPERS ----------
@@ -58,7 +55,6 @@ public record Event(
         this.eventTime,
         this.eventEndDate,
         this.eventEndTime,
-        this.eventStatus,
-        this.isFollowed);
+        this.eventStatus);
   }
 }

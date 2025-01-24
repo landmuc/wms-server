@@ -30,7 +30,6 @@ public class UserEntity {
   private AuthorityRole authorityRole;
   @Column(name = "date_created")
   private LocalDate dateCreated;
-  // private List<Long> followedEvents;
 
   // ---------- CONSTRUCTORS ----------
   public UserEntity() {
@@ -40,13 +39,10 @@ public class UserEntity {
   public UserEntity(
       String username,
       String hashedPassword,
-      AuthorityRole authorityRole
-  // List<Long> followedEvents
-  ) {
+      AuthorityRole authorityRole) {
     this.username = username;
     this.hashedPassword = hashedPassword;
     this.authorityRole = authorityRole;
-    // this.followedEvents = followedEvents;
   }
 
   // Constructor without password for mapping
@@ -54,14 +50,11 @@ public class UserEntity {
       UUID id,
       String username,
       AuthorityRole authorityRole,
-      LocalDate dateCreated
-  // List<Long> followedEvents
-  ) {
+      LocalDate dateCreated) {
     this.id = id;
     this.username = username;
     this.authorityRole = authorityRole;
     this.dateCreated = dateCreated;
-    // this.followedEvents = followedEvents;
   }
 
   // Constructor with all instance variables
@@ -70,15 +63,12 @@ public class UserEntity {
       String username,
       String hashedPassword,
       AuthorityRole authorityRole,
-      LocalDate dateCreated
-  // List<Long> followedEvents
-  ) {
+      LocalDate dateCreated) {
     this.id = id;
     this.username = username;
     this.hashedPassword = hashedPassword;
     this.authorityRole = authorityRole;
     this.dateCreated = dateCreated;
-    // this.followedEvents = followedEvents;
   }
 
   // ---------- MAPPERS ----------
@@ -87,9 +77,7 @@ public class UserEntity {
         this.id,
         this.username,
         this.authorityRole,
-        this.dateCreated
-    // this.followedEvents
-    );
+        this.dateCreated);
   }
 
   // ---------- GETTERS (AND SETTERS) ----------
@@ -112,9 +100,5 @@ public class UserEntity {
   public LocalDate getDateCreated() {
     return dateCreated;
   }
-
-  // public List<Long> getFollowedEvents() {
-  // return followedEvents;
-  // }
 
 }

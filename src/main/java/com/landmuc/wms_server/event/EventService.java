@@ -81,8 +81,7 @@ public class EventService {
         updatedEvent.eventTime(),
         updatedEvent.eventEndDate(),
         updatedEvent.eventEndTime(),
-        updatedEvent.eventStatus(),
-        updatedEvent.isFollowed()).toEventEntity();
+        updatedEvent.eventStatus()).toEventEntity();
 
     return eventRepository.save(updatedEventEntity);
   }

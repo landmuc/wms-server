@@ -1,7 +1,6 @@
 package com.landmuc.wms_server.user;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 import com.landmuc.wms_server.security.AuthorityRole;
@@ -11,24 +10,18 @@ public record User(
     UUID id,
     String username,
     AuthorityRole authorityRole,
-    LocalDate dateCreated
-// List<Long> followedEvents
-) {
+    LocalDate dateCreated) {
 
   // TODO: DELETE Constructor?
   // ---------- CONSTRUCTORS ----------
   public User(
       String username,
-      AuthorityRole authorityRole
-  // List<Long> followedEvents
-  ) {
+      AuthorityRole authorityRole) {
     this(
         null,
         username,
         authorityRole,
-        null
-    // followedEvents
-    );
+        null);
   }
 
   // ---------- MAPPERS ----------
@@ -37,9 +30,7 @@ public record User(
         this.id,
         this.username,
         this.authorityRole,
-        this.dateCreated
-    // this.followedEvents
-    );
+        this.dateCreated);
   }
 
 }

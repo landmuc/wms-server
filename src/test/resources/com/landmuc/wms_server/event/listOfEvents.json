@@ -10,8 +10,7 @@
   "eventTime": "14:30:00",
   "eventEndDate": "2025-11-17",
   "eventEndTime": "23:59:00",
-  "eventStatus": "ONGOING",
-  "isFollowed": true
+  "eventStatus": "ONGOING"
 },
 {
   "id": 344,
@@ -24,8 +23,7 @@
   "eventTime": "20:00:00",
   "eventEndDate": "2024-10-08",
   "eventEndTime": "11:59:00",
-  "eventStatus": "OVER",
-  "isFollowed": false
+  "eventStatus": "OVER"
 },
 {
   "id": 666,
@@ -38,7 +36,6 @@
   "eventTime": "12:00:00",
   "eventEndDate": "2025-12-24",
   "eventEndTime": "17:00:00",
-  "eventStatus": "UPCOMING",
-  "isFollowed": true
+  "eventStatus": "UPCOMING"
 }
 ]

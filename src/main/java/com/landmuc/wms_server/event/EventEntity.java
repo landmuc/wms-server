@@ -33,8 +33,6 @@ public class EventEntity {
   @Enumerated(EnumType.STRING)
   @Column(name = "event_status")
   private EventStatus eventStatus;
-  @Column(name = "is_followed")
-  private boolean isFollowed;
 
   // ---------- CONSTRUCTORS ----------
   public EventEntity() {
@@ -48,8 +46,7 @@ public class EventEntity {
       LocalTime eventTime,
       LocalDate eventEndDate,
       LocalTime eventEndTime,
-      EventStatus eventStatus,
-      boolean isFollowed) {
+      EventStatus eventStatus) {
     this.title = title;
     this.description = description;
     this.eventDate = eventDate;
@@ -57,7 +54,6 @@ public class EventEntity {
     this.eventEndDate = eventEndDate;
     this.eventEndTime = eventEndTime;
     this.eventStatus = eventStatus;
-    this.isFollowed = isFollowed;
   }
 
   // Constructor without id dateCreated and timeCreated
@@ -69,8 +65,7 @@ public class EventEntity {
       LocalTime eventTime,
       LocalDate eventEndDate,
       LocalTime eventEndTime,
-      EventStatus eventStatus,
-      boolean isFollowed) {
+      EventStatus eventStatus) {
     this.ownerUsername = ownerUsername;
     this.title = title;
     this.description = description;
@@ -79,7 +74,6 @@ public class EventEntity {
     this.eventEndDate = eventEndDate;
     this.eventEndTime = eventEndTime;
     this.eventStatus = eventStatus;
-    this.isFollowed = isFollowed;
   }
 
   // Constructor with all instance variables
@@ -94,8 +88,7 @@ public class EventEntity {
       LocalTime eventTime,
       LocalDate eventEndDate,
       LocalTime eventEndTime,
-      EventStatus eventStatus,
-      boolean isFollowed) {
+      EventStatus eventStatus) {
     this.id = id;
     this.ownerUsername = ownerUsername;
     this.title = title;
@@ -107,7 +100,6 @@ public class EventEntity {
     this.eventEndDate = eventEndDate;
     this.eventEndTime = eventEndTime;
     this.eventStatus = eventStatus;
-    this.isFollowed = isFollowed;
   }
 
   // ---------- MAPPERS ----------
@@ -123,8 +115,7 @@ public class EventEntity {
         this.eventTime,
         this.eventEndDate,
         this.eventEndTime,
-        this.eventStatus,
-        this.isFollowed);
+        this.eventStatus);
   }
 
   // ---------- GETTERS (AND SETTERS) ----------
@@ -170,10 +161,6 @@ public class EventEntity {
 
   public EventStatus getEventStatus() {
     return eventStatus;
-  }
-
-  public boolean isFollowed() {
-    return isFollowed;
   }
 
 }
