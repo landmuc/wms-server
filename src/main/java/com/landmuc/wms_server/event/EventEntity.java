@@ -12,9 +12,8 @@ import jakarta.persistence.*;
 public class EventEntity {
   // ---------- INSTANCE VARIABLES ----------
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY: relies on the database to generate unique Ids.
-                                                      // Commonly used with dbs like MySQL and PostgreSQL
-  private UUID id = UUID.randomUUID();
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
   @Column(name = "owner_username")
   private String ownerUsername;
   private String title;

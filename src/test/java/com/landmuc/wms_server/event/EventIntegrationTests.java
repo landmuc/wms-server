@@ -34,12 +34,12 @@ class EventIntegrationTests {
     ResponseEntity<String> response = restTemplate
         .withBasicAuth("userC", "c@666") // to show that you can access the event
         // even if you are not the owner
-        .getForEntity("/events/123", String.class);
+        .getForEntity("/events/f47ac10b-58cc-4372-a567-0e02b2c3d479", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     DocumentContext documentContext = JsonPath.parse(response.getBody());
-    Number id = documentContext.read("$.id");
-    assertThat(id).isEqualTo(123);
+    String id = documentContext.read("$.id");
+    assertThat(id).isEqualTo("f47ac10b-58cc-4372-a567-0e02b2c3d479");
     String ownerUsername = documentContext.read("$.ownerUsername");
     assertThat(ownerUsername).isEqualTo("userA");
     String title = documentContext.read("$.title");
@@ -66,7 +66,7 @@ class EventIntegrationTests {
   void shouldNotReturnAnEventWithAnUnknownId() {
     ResponseEntity<String> response = restTemplate
         .withBasicAuth("userA", "a@123")
-        .getForEntity("/events/9999", String.class);
+        .getForEntity("/events/9d8f5715-2e7c-4e64-8e34-35f510c12e66", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
   }
 
@@ -74,7 +74,7 @@ class EventIntegrationTests {
   void shouldNotReturnAnEventWhenAccessingWithAnUnauthorizedRole() {
     ResponseEntity<String> response = restTemplate
         .withBasicAuth("userB", "b@344")
-        .getForEntity("/events/123", String.class);
+        .getForEntity("/events/f47ac10b-58cc-4372-a567-0e02b2c3d479", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
   }
 
@@ -82,12 +82,12 @@ class EventIntegrationTests {
   void shouldNotReturnAnEventWhenUsingWrongCredentials() {
     ResponseEntity<String> responseWrongUsername = restTemplate
         .withBasicAuth("unkown_user", "a@123") // wrong username
-        .getForEntity("/events/123", String.class);
+        .getForEntity("/events/f47ac10b-58cc-4372-a567-0e02b2c3d479", String.class);
     assertThat(responseWrongUsername.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
 
     ResponseEntity<String> responseWrongPassword = restTemplate
         .withBasicAuth("userA", "wrong_password!") // wrong password
-        .getForEntity("/events/123", String.class);
+        .getForEntity("/events/f47ac10b-58cc-4372-a567-0e02b2c3d479", String.class);
     assertThat(responseWrongPassword.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
   }
 
@@ -102,14 +102,15 @@ class EventIntegrationTests {
     int eventCount = documentContext.read("$.length()");
     assertThat(eventCount).isEqualTo(3);
     JSONArray ids = documentContext.read("$..id");
-    assertThat(ids).containsExactlyInAnyOrder(123, 344, 666);
+    assertThat(ids).containsExactlyInAnyOrder("f47ac10b-58cc-4372-a567-0e02b2c3d479",
+        "38400000-8cf0-11bd-b23e-10b96e4ef00d", "a22c9092-5983-4111-b11e-6bf41c53a22c");
     JSONArray titles = documentContext.read("$..title");
     assertThat(titles).containsExactlyInAnyOrder("First Title", "Second Title",
         "Third Title");
   }
 
   @Test
-  void shouldNotReturnEventsWhenAListIsRequestedWithAnUnauthorizedRole() {
+  void shouldNotReturnAnyEventsWhenAListIsRequestedWithAnUnauthorizedRole() {
     ResponseEntity<String> response = restTemplate
         .withBasicAuth("userB", "b@344")
         .getForEntity("/events", String.class);
@@ -165,7 +166,7 @@ class EventIntegrationTests {
     assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
-    Number id = documentContext.read("$.id");
+    String id = documentContext.read("$.id");
     assertThat(id).isNotNull();
     String ownerUsername = documentContext.read("$.ownerUsername");
     assertThat(ownerUsername).isEqualTo("userA");
@@ -231,12 +232,12 @@ class EventIntegrationTests {
   void shouldDeleteAnExistingEvent() {
     ResponseEntity<Void> response = restTemplate
         .withBasicAuth("userA", "a@123")
-        .exchange("/events/123", HttpMethod.DELETE, null, Void.class);
+        .exchange("/events/f47ac10b-58cc-4372-a567-0e02b2c3d479", HttpMethod.DELETE, null, Void.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
     ResponseEntity<String> getResponse = restTemplate
         .withBasicAuth("userA", "a@123")
-        .getForEntity("/events/123", String.class);
+        .getForEntity("/events/f47ac10b-58cc-4372-a567-0e02b2c3d479", String.class);
     assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
   }
 
@@ -244,7 +245,7 @@ class EventIntegrationTests {
   void shouldNotDeleteAnExistingEventWithAnUnauthorizedRole() {
     ResponseEntity<Void> response = restTemplate
         .withBasicAuth("userB", "b@344")
-        .exchange("/events/123", HttpMethod.DELETE, null, Void.class);
+        .exchange("/events/f47ac10b-58cc-4372-a567-0e02b2c3d479", HttpMethod.DELETE, null, Void.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
   }
 
@@ -252,12 +253,12 @@ class EventIntegrationTests {
   void shouldNotDeleteAnExistingEventWhenUsingWrongCredentials() {
     ResponseEntity<Void> responseWrongUsername = restTemplate
         .withBasicAuth("unkown_user", "b@344")
-        .exchange("/events/123", HttpMethod.DELETE, null, Void.class);
+        .exchange("/events/f47ac10b-58cc-4372-a567-0e02b2c3d479", HttpMethod.DELETE, null, Void.class);
     assertThat(responseWrongUsername.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
 
     ResponseEntity<Void> responseWrongPassword = restTemplate
         .withBasicAuth("userB", "wrong_password!")
-        .exchange("/events/123", HttpMethod.DELETE, null, Void.class);
+        .exchange("/events/f47ac10b-58cc-4372-a567-0e02b2c3d479", HttpMethod.DELETE, null, Void.class);
     assertThat(responseWrongPassword.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
   }
 
@@ -276,17 +277,17 @@ class EventIntegrationTests {
 
     ResponseEntity<Void> response = restTemplate
         .withBasicAuth("userA", "a@123")
-        .exchange("/events/123", HttpMethod.PUT, request, Void.class);
+        .exchange("/events/f47ac10b-58cc-4372-a567-0e02b2c3d479", HttpMethod.PUT, request, Void.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
     ResponseEntity<String> getResponse = restTemplate
         .withBasicAuth("userA", "a@123")
-        .getForEntity("/events/123", String.class);
+        .getForEntity("/events/f47ac10b-58cc-4372-a567-0e02b2c3d479", String.class);
     assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
     DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
-    Number id = documentContext.read("$.id");
-    assertThat(id).isEqualTo(123);
+    String id = documentContext.read("$.id");
+    assertThat(id).isEqualTo("f47ac10b-58cc-4372-a567-0e02b2c3d479");
     String ownerUsername = documentContext.read("$.ownerUsername");
     assertThat(ownerUsername).isEqualTo("userA");
     String title = documentContext.read("$.title");
@@ -320,7 +321,7 @@ class EventIntegrationTests {
 
     ResponseEntity<Void> response = restTemplate
         .withBasicAuth("userB", "b@344")
-        .exchange("/events/123", HttpMethod.PUT, request, Void.class);
+        .exchange("/events/f47ac10b-58cc-4372-a567-0e02b2c3d479", HttpMethod.PUT, request, Void.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
   }
 
@@ -338,12 +339,12 @@ class EventIntegrationTests {
 
     ResponseEntity<Void> responseWrongUsername = restTemplate
         .withBasicAuth("unkown_user", "a@123")
-        .exchange("/events/123", HttpMethod.PUT, request, Void.class);
+        .exchange("/events/f47ac10b-58cc-4372-a567-0e02b2c3d479", HttpMethod.PUT, request, Void.class);
     assertThat(responseWrongUsername.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
 
     ResponseEntity<Void> responseWrongPassword = restTemplate
         .withBasicAuth("userA", "wrong_password!")
-        .exchange("/events/123", HttpMethod.PUT, request, Void.class);
+        .exchange("/events/f47ac10b-58cc-4372-a567-0e02b2c3d479", HttpMethod.PUT, request, Void.class);
     assertThat(responseWrongPassword.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
   }
 
@@ -360,7 +361,7 @@ class EventIntegrationTests {
     HttpEntity<EventEntity> request = new HttpEntity<>(eventEntityUpdate);
     ResponseEntity<Void> response = restTemplate
         .withBasicAuth("userA", "a@123")
-        .exchange("/events/9999", HttpMethod.PUT, request, Void.class);
+        .exchange("/events/9d8f5715-2e7c-4e64-8e34-35f510c12e66", HttpMethod.PUT, request, Void.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
   }
 }

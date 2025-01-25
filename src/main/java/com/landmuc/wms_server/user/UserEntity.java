@@ -1,7 +1,6 @@
 package com.landmuc.wms_server.user;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 import com.landmuc.wms_server.security.AuthorityRole;
@@ -20,8 +19,8 @@ import jakarta.persistence.Table;
 public class UserEntity {
   // ---------- INSTANCE VARIABLES ----------
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private UUID id = UUID.randomUUID();
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
   private String username;
   @Column(name = "hashed_password")
   private String hashedPassword;
