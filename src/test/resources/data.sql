@@ -9,11 +9,10 @@ INSERT INTO events (
     event_time,
     event_end_date,
     event_end_time,
-    event_status,
-    is_followed
+    event_status
 ) VALUES
 (
-    123,
+    'f47ac10b-58cc-4372-a567-0e02b2c3d479', -- Long 123 old id
     'userA',
     'First Title',
     'First Description',
@@ -23,11 +22,10 @@ INSERT INTO events (
     '14:30:00',
     '2025-11-17',
     '23:59:00',
-    'ONGOING',
-    true
+    'ONGOING'
 ),
 (
-    344,
+    '38400000-8cf0-11bd-b23e-10b96e4ef00d', -- Long 344 old id
     'userA',
     'Second Title',
     'Second Description',
@@ -37,11 +35,10 @@ INSERT INTO events (
     '20:00:00',
     '2024-10-08',
     '11:59:00',
-    'OVER',
-    false
+    'OVER'
 ),
 (
-    666,
+    'a22c9092-5983-4111-b11e-6bf41c53a22c', -- Long 666 old id
     'userC',
     'Third Title',
     'Third Description',
@@ -51,6 +48,14 @@ INSERT INTO events (
     '12:00:00',
     '2025-12-24',
     '17:00:00',
-    'UPCOMING',
-    true
+    'UPCOMING'
+);
+
+--add followed_events
+INSERT INTO users (id, username, authority_role, date_created)
+VALUES (
+    '550e8400-e29b-41d4-a716-446655440000',
+    'john_doe',
+    'USER',
+    '2025-01-10'
 );

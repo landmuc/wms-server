@@ -2,9 +2,11 @@ package com.landmuc.wms_server.event;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 public record Event(
-    Long id,
+    // ---------- INSTANCE VARIABLES ----------
+    UUID id,
     String ownerUsername,
     String title,
     String description,
@@ -14,9 +16,10 @@ public record Event(
     LocalTime eventTime,
     LocalDate eventEndDate,
     LocalTime eventEndTime,
-    EventStatus eventStatus,
-    boolean isFollowed) {
+    EventStatus eventStatus) {
 
+  // TODO: DELETE Constructor? Is used in EventJsonTest.java
+  // ---------- CONSTRUCTORS ----------
   public Event(
       String ownerUsername,
       String title,
@@ -25,8 +28,7 @@ public record Event(
       LocalTime eventTime,
       LocalDate eventEndDate,
       LocalTime eventEndTime,
-      EventStatus eventStatus,
-      boolean isFollowed) {
+      EventStatus eventStatus) {
     this(
         null,
         ownerUsername,
@@ -38,11 +40,10 @@ public record Event(
         eventTime,
         eventEndDate,
         eventEndTime,
-        eventStatus,
-        isFollowed);
+        eventStatus);
   }
 
-  // EventEntity Mapper
+  // ---------- MAPPERS ----------
   public EventEntity toEventEntity() {
     return new EventEntity(
         this.id,
@@ -55,7 +56,6 @@ public record Event(
         this.eventTime,
         this.eventEndDate,
         this.eventEndTime,
-        this.eventStatus,
-        this.isFollowed);
+        this.eventStatus);
   }
 }

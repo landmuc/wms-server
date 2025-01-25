@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 @JsonTest
 class EventJsonTest {
@@ -30,7 +31,7 @@ class EventJsonTest {
   void setUp() {
     events = Arrays.array(
         new Event(
-            123L,
+            UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479"),
             "userA",
             "First Title",
             "First Description",
@@ -40,10 +41,9 @@ class EventJsonTest {
             LocalTime.of(14, 30), // eventTime
             LocalDate.of(2025, 11, 17), // eventEndDate
             LocalTime.of(23, 59), // eventEndTime
-            EventStatus.ONGOING,
-            true),
+            EventStatus.ONGOING),
         new Event(
-            344L,
+            UUID.fromString("38400000-8cf0-11bd-b23e-10b96e4ef00d"),
             "userA",
             "Second Title",
             "Second Description",
@@ -53,10 +53,9 @@ class EventJsonTest {
             LocalTime.of(20, 0), // eventTime
             LocalDate.of(2024, 10, 8), // eventEndDate
             LocalTime.of(11, 59), // eventEndTime
-            EventStatus.OVER,
-            false),
+            EventStatus.OVER),
         new Event(
-            666L,
+            UUID.fromString("a22c9092-5983-4111-b11e-6bf41c53a22c"),
             "userC",
             "Third Title",
             "Third Description",
@@ -66,8 +65,7 @@ class EventJsonTest {
             LocalTime.of(12, 0), // eventTime
             LocalDate.of(2025, 12, 24), // eventEndDate
             LocalTime.of(17, 00), // eventEndTime
-            EventStatus.UPCOMING,
-            true));
+            EventStatus.UPCOMING));
 
   }
 
@@ -75,8 +73,9 @@ class EventJsonTest {
   void eventSerializationTest() throws IOException {
     Event event = events[0];
     assertThat(json.write(event)).isStrictlyEqualToJson("singleEvent.json");
-    assertThat(json.write(event)).hasJsonPathNumberValue("@.id");
-    assertThat(json.write(event)).extractingJsonPathNumberValue("@.id").isEqualTo(123);
+    assertThat(json.write(event)).hasJsonPathStringValue("@.id");
+    assertThat(json.write(event)).extractingJsonPathStringValue("@.id")
+        .isEqualTo("f47ac10b-58cc-4372-a567-0e02b2c3d479");
     assertThat(json.write(event)).hasJsonPathStringValue("@.ownerUsername");
     assertThat(json.write(event)).extractingJsonPathStringValue("@.ownerUsername").isEqualTo("userA");
     assertThat(json.write(event)).hasJsonPathStringValue("@.title");
@@ -97,8 +96,6 @@ class EventJsonTest {
     assertThat(json.write(event)).extractingJsonPathStringValue("@.eventEndTime").isEqualTo("23:59:00");
     assertThat(json.write(event)).hasJsonPathStringValue("@.eventStatus");
     assertThat(json.write(event)).extractingJsonPathStringValue("@.eventStatus").isEqualTo("ONGOING");
-    assertThat(json.write(event)).hasJsonPathBooleanValue("@.isFollowed");
-    assertThat(json.write(event)).extractingJsonPathBooleanValue("@.isFollowed").isEqualTo(true);
   }
 
   @Test
@@ -110,7 +107,7 @@ class EventJsonTest {
   void eventDeserializationTest() throws IOException {
     String expected = """
         {
-        "id": 123,
+        "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
         "ownerUsername": "userA",
         "title": "First Title",
         "description": "First Description",
@@ -120,13 +117,12 @@ class EventJsonTest {
         "eventTime": "14:30:00",
         "eventEndDate": "2025-11-17",
         "eventEndTime": "23:59:00",
-        "eventStatus": "ONGOING",
-        "isFollowed": true
+        "eventStatus": "ONGOING"
         }
         """;
 
     Event event = new Event(
-        123L,
+        UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479"),
         "userA",
         "First Title",
         "First Description",
@@ -136,10 +132,9 @@ class EventJsonTest {
         LocalTime.of(14, 30), // eventTime
         LocalDate.of(2025, 11, 17), // eventEndDate
         LocalTime.of(23, 59), // eventEndTime
-        EventStatus.ONGOING,
-        true);
+        EventStatus.ONGOING);
     assertThat(json.parse(expected)).isEqualTo(event);
-    assertThat(json.parseObject(expected).id()).isEqualTo(123);
+    assertThat(json.parseObject(expected).id()).isEqualTo(UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479"));
     assertThat(json.parseObject(expected).ownerUsername()).isEqualTo("userA");
     assertThat(json.parseObject(expected).title()).isEqualTo("First Title");
     assertThat(json.parseObject(expected).description()).isEqualTo("First Description");
@@ -150,7 +145,6 @@ class EventJsonTest {
     assertThat(json.parseObject(expected).eventEndDate()).isEqualTo("2025-11-17");
     assertThat(json.parseObject(expected).eventEndTime()).isEqualTo("23:59:00");
     assertThat(json.parseObject(expected).eventStatus()).isEqualTo(EventStatus.ONGOING);
-    assertThat(json.parseObject(expected).isFollowed()).isEqualTo(true);
   }
 
   @Test
@@ -158,7 +152,7 @@ class EventJsonTest {
     String expected = """
                 [
                   {
-          "id": 123,
+          "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
           "ownerUsername": "userA",
           "title": "First Title",
           "description": "First Description",
@@ -168,11 +162,10 @@ class EventJsonTest {
           "eventTime": "14:30:00",
           "eventEndDate": "2025-11-17",
           "eventEndTime": "23:59:00",
-          "eventStatus": "ONGOING",
-          "isFollowed": true
+          "eventStatus": "ONGOING"
         },
         {
-          "id": 344,
+          "id": "38400000-8cf0-11bd-b23e-10b96e4ef00d",
           "ownerUsername": "userA",
           "title": "Second Title",
           "description": "Second Description",
@@ -182,11 +175,10 @@ class EventJsonTest {
           "eventTime": "20:00:00",
           "eventEndDate": "2024-10-08",
           "eventEndTime": "11:59:00",
-          "eventStatus": "OVER",
-          "isFollowed": false
+          "eventStatus": "OVER"
         },
         {
-          "id": 666,
+          "id": "a22c9092-5983-4111-b11e-6bf41c53a22c",
           "ownerUsername": "userC",
           "title": "Third Title",
           "description": "Third Description",
@@ -196,8 +188,7 @@ class EventJsonTest {
           "eventTime": "12:00:00",
           "eventEndDate": "2025-12-24",
           "eventEndTime": "17:00:00",
-          "eventStatus": "UPCOMING",
-          "isFollowed": true
+          "eventStatus": "UPCOMING"
         }
                 ]
                     """;

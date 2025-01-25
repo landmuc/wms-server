@@ -1,6 +1,6 @@
 [
 {
-  "id": 123,
+  "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
   "ownerUsername": "userA",
   "title": "First Title",
   "description": "First Description",
@@ -10,11 +10,10 @@
   "eventTime": "14:30:00",
   "eventEndDate": "2025-11-17",
   "eventEndTime": "23:59:00",
-  "eventStatus": "ONGOING",
-  "isFollowed": true
+  "eventStatus": "ONGOING"
 },
 {
-  "id": 344,
+  "id": "38400000-8cf0-11bd-b23e-10b96e4ef00d",
   "ownerUsername": "userA",
   "title": "Second Title",
   "description": "Second Description",
@@ -24,11 +23,10 @@
   "eventTime": "20:00:00",
   "eventEndDate": "2024-10-08",
   "eventEndTime": "11:59:00",
-  "eventStatus": "OVER",
-  "isFollowed": false
+  "eventStatus": "OVER"
 },
 {
-  "id": 666,
+  "id": "a22c9092-5983-4111-b11e-6bf41c53a22c",
   "ownerUsername": "userC",
   "title": "Third Title",
   "description": "Third Description",
@@ -38,7 +36,6 @@
   "eventTime": "12:00:00",
   "eventEndDate": "2025-12-24",
   "eventEndTime": "17:00:00",
-  "eventStatus": "UPCOMING",
-  "isFollowed": true
+  "eventStatus": "UPCOMING"
 }
 ]

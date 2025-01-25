@@ -2,6 +2,7 @@ package com.landmuc.wms_server.event;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 import jakarta.persistence.*;
 
@@ -9,10 +10,10 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "events")
 public class EventEntity {
+  // ---------- INSTANCE VARIABLES ----------
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY: relies on the database to generate unique Ids.
-                                                      // Commonly used with dbs like MySQL and PostgreSQL
-  private Long id;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
   @Column(name = "owner_username")
   private String ownerUsername;
   private String title;
@@ -32,9 +33,8 @@ public class EventEntity {
   @Enumerated(EnumType.STRING)
   @Column(name = "event_status")
   private EventStatus eventStatus;
-  @Column(name = "is_followed")
-  private boolean isFollowed;
 
+  // ---------- CONSTRUCTORS ----------
   public EventEntity() {
   }
 
@@ -46,8 +46,7 @@ public class EventEntity {
       LocalTime eventTime,
       LocalDate eventEndDate,
       LocalTime eventEndTime,
-      EventStatus eventStatus,
-      boolean isFollowed) {
+      EventStatus eventStatus) {
     this.title = title;
     this.description = description;
     this.eventDate = eventDate;
@@ -55,7 +54,6 @@ public class EventEntity {
     this.eventEndDate = eventEndDate;
     this.eventEndTime = eventEndTime;
     this.eventStatus = eventStatus;
-    this.isFollowed = isFollowed;
   }
 
   // Constructor without id dateCreated and timeCreated
@@ -67,8 +65,7 @@ public class EventEntity {
       LocalTime eventTime,
       LocalDate eventEndDate,
       LocalTime eventEndTime,
-      EventStatus eventStatus,
-      boolean isFollowed) {
+      EventStatus eventStatus) {
     this.ownerUsername = ownerUsername;
     this.title = title;
     this.description = description;
@@ -77,12 +74,11 @@ public class EventEntity {
     this.eventEndDate = eventEndDate;
     this.eventEndTime = eventEndTime;
     this.eventStatus = eventStatus;
-    this.isFollowed = isFollowed;
   }
 
   // Constructor with all instance variables
   public EventEntity(
-      Long id,
+      UUID id,
       String ownerUsername,
       String title,
       String description,
@@ -92,8 +88,7 @@ public class EventEntity {
       LocalTime eventTime,
       LocalDate eventEndDate,
       LocalTime eventEndTime,
-      EventStatus eventStatus,
-      boolean isFollowed) {
+      EventStatus eventStatus) {
     this.id = id;
     this.ownerUsername = ownerUsername;
     this.title = title;
@@ -105,10 +100,9 @@ public class EventEntity {
     this.eventEndDate = eventEndDate;
     this.eventEndTime = eventEndTime;
     this.eventStatus = eventStatus;
-    this.isFollowed = isFollowed;
   }
 
-  // Event Mapper
+  // ---------- MAPPERS ----------
   public Event toEvent() {
     return new Event(
         this.id,
@@ -121,12 +115,11 @@ public class EventEntity {
         this.eventTime,
         this.eventEndDate,
         this.eventEndTime,
-        this.eventStatus,
-        this.isFollowed);
+        this.eventStatus);
   }
 
-  // Getters (and Setters)
-  public Long getId() {
+  // ---------- GETTERS (AND SETTERS) ----------
+  public UUID getId() {
     return id;
   }
 
@@ -168,10 +161,6 @@ public class EventEntity {
 
   public EventStatus getEventStatus() {
     return eventStatus;
-  }
-
-  public boolean isFollowed() {
-    return isFollowed;
   }
 
 }

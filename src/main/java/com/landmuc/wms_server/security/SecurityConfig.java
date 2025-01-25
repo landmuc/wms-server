@@ -20,6 +20,7 @@ class SecurityConfig {
     http
         .authorizeHttpRequests(request -> request
             .requestMatchers("/events/**").hasRole(AuthorityRole.USER.getAuthorityRoleAsString())
+            .requestMatchers("/users/**").hasRole(AuthorityRole.USER.getAuthorityRoleAsString())
             .requestMatchers("/h2-console/**").permitAll())
         .httpBasic(Customizer.withDefaults()) // for basic request for APIs etc
         .csrf(crsf -> crsf.disable())

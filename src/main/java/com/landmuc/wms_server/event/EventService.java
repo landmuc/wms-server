@@ -3,6 +3,7 @@ package com.landmuc.wms_server.event;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,7 @@ public class EventService {
     this.eventRepository = eventRepository;
   }
 
-  public Event findEventById(Long requestedId) {
+  public Event findEventById(UUID requestedId) {
     Optional<EventEntity> optionalEventEntity = eventRepository.findById(requestedId);
 
     if (optionalEventEntity.isPresent()) {
@@ -54,7 +55,7 @@ public class EventService {
     return eventRepository.save(event.toEventEntity());
   }
 
-  public boolean deleteEventById(Long requestedId, Principal principal) {
+  public boolean deleteEventById(UUID requestedId, Principal principal) {
     if (!eventRepository.existsByIdAndOwnerUsername(requestedId, principal.getName())) {
       return false;
     }
@@ -63,7 +64,7 @@ public class EventService {
   }
 
   // create new Event and replace new Event with the old one -> same ID
-  public EventEntity updateEvent(Long requestedId, Event updatedEvent) {
+  public EventEntity updateEvent(UUID requestedId, Event updatedEvent) {
     Optional<EventEntity> optionalEventEntity = eventRepository.findById(requestedId);
 
     if (optionalEventEntity.isEmpty()) {
@@ -81,15 +82,14 @@ public class EventService {
         updatedEvent.eventTime(),
         updatedEvent.eventEndDate(),
         updatedEvent.eventEndTime(),
-        updatedEvent.eventStatus(),
-        updatedEvent.isFollowed()).toEventEntity();
+        updatedEvent.eventStatus()).toEventEntity();
 
     return eventRepository.save(updatedEventEntity);
   }
 
   // --------------------- CURRENTLY NOT USED ---------------------
 
-  public Event getEventById(Long requestedId) {
+  public Event getEventById(UUID requestedId) {
     try {
       // getReferenceById() return a reference (proxy) to the entity and only triggers
       // a database query when you actually access the entity's properties
