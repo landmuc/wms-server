@@ -17,4 +17,12 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(255),
     authority_role VARCHAR(255),
     date_created DATE
+);
+
+CREATE TABLE IF NOT EXISTS followed_events (
+    user_id UUID,
+    event_id UUID,
+    PRIMARY KEY (user_id, event_id),
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (event_id) REFERENCES events (id)
 )
