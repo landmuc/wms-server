@@ -20,4 +20,9 @@ public class FollowedEventsService {
     return followedEventIds;
   }
 
+  public List<UUID> findAllFollowedUserIdsByEventId(UUID eventId) {
+    List<UUID> followedUserIds = followedEventsRepository.findAllFollowedUserIdsByEventId(eventId);
+    return followedUserIds;
+  }
+
 }

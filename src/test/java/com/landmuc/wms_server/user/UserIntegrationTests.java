@@ -30,7 +30,7 @@ class UserIntegrationTests {
     String id = documentContext.read("$.id");
     assertThat(id).isEqualTo("550e8400-e29b-41d4-a716-446655440000");
     String username = documentContext.read("$.username");
-    assertThat(username).isEqualTo("john_doe");
+    assertThat(username).isEqualTo("userA");
     String authorityRole = documentContext.read("$.authorityRole");
     assertThat(authorityRole).isEqualTo("USER");
     String dateCreated = documentContext.read("$.dateCreated");

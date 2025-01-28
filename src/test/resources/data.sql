@@ -52,9 +52,22 @@ INSERT INTO events (
 );
 
 INSERT INTO users (id, username, authority_role, date_created)
-VALUES (
+VALUES
+(
     '550e8400-e29b-41d4-a716-446655440000',
-    'john_doe',
+    'userA',
+    'USER',
+    '2025-01-10'
+),
+(
+    'e711568c-5f32-4e9c-b631-9404888c854f',
+    'userB',
+    'NON-OWNER',
+    '2025-01-10'
+),
+(
+    'b90a3897-a6d8-4c83-8971-015234565432',
+    'userC',
     'USER',
     '2025-01-10'
 );
@@ -72,4 +85,8 @@ VALUES
 (
     '550e8400-e29b-41d4-a716-446655440000',
     'a22c9092-5983-4111-b11e-6bf41c53a22c'
+),
+(
+    'b90a3897-a6d8-4c83-8971-015234565432',
+    'f47ac10b-58cc-4372-a567-0e02b2c3d479'
 );

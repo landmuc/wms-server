@@ -11,6 +11,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FollowedEventsRepository extends JpaRepository<FollowedEventsEntity, FollowedEventsId> {
 
+  // finds all events (ids) which a certain user follows
   @Query("SELECT fe.eventId FROM FollowedEventsEntity fe WHERE fe.userId = :userId")
   List<UUID> findAllFollowedEventIdsByUserId(@Param("userId") UUID userId);
+
+  // finds all users (ids) which follow a certain event
+  @Query("SELECT fe.userId FROM FollowedEventsEntity fe WHERE fe.eventId = :eventId")
+  List<UUID> findAllFollowedUserIdsByEventId(@Param("eventId") UUID eventId);
+
 }

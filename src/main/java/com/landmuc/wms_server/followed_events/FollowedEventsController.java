@@ -11,22 +11,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/followed-events")
+@RequestMapping("/follows")
 public class FollowedEventsController {
-  private FollowedEventsService followedEventsService;
+  private final FollowedEventsService followedEventsService;
 
   @Autowired
   private FollowedEventsController(FollowedEventsService followedEventsService) {
     this.followedEventsService = followedEventsService;
   }
 
-  @GetMapping("/{requestedId}")
-  private ResponseEntity<List<UUID>> findAllFollowedEventIdsByUserId(@PathVariable UUID requestedId) {
-    List<UUID> eventIds = followedEventsService.findAllFollowedEventIdsByUserId(requestedId);
+  @GetMapping("/events/{userId}")
+  private ResponseEntity<List<UUID>> findAllFollowedEventIdsByUserId(@PathVariable UUID userId) {
+    List<UUID> eventIds = followedEventsService.findAllFollowedEventIdsByUserId(userId);
 
     if (eventIds == null) {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(eventIds);
   }
+
+  @GetMapping("/users/{eventId}")
+  private ResponseEntity<List<UUID>> findAllFollowedUserIdsByEventId(@PathVariable UUID eventId) {
+    List<UUID> eventIds = followedEventsService.findAllFollowedUserIdsByEventId(eventId);
+
+    if (eventIds == null) {
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(eventIds);
+  }
+
 }

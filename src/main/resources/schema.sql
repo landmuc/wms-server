@@ -24,5 +24,5 @@ CREATE TABLE IF NOT EXISTS followed_events (
     event_id UUID,
     PRIMARY KEY (user_id, event_id),
     FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (event_id) REFERENCES events (id)
+    FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE CASCADE
 )
