@@ -40,12 +40,13 @@ tasks.withType<Test> {
 // This section causes useful test output to go to the terminal
 tasks.test {
     testLogging {
-        events("passed", "skipped", "failed") // Commented out options: "standardOut", "standardError"
+        events("passed", "skipped", "failed")
+        // events("passed", "skipped", "failed", "standardOut", "standardError")
         showExceptions = true
-        exceptionFormat = TestExceptionFormat.FULL
         showCauses = true
         showStackTraces = true
-        showStandardStreams = false // Change to `true` for more verbose test output
+        exceptionFormat = TestExceptionFormat.FULL
+        showStandardStreams = false
     }
 }
 
