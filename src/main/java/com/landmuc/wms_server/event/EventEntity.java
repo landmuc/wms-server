@@ -2,6 +2,7 @@ package com.landmuc.wms_server.event;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 import java.util.UUID;
 
 import jakarta.persistence.*;
@@ -102,6 +103,43 @@ public class EventEntity {
     this.eventStatus = eventStatus;
   }
 
+  // ---------- EQUALS & HASHCODE----------
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    EventEntity that = (EventEntity) o;
+    return Objects.equals(id, that.id) &&
+        Objects.equals(ownerUsername, that.ownerUsername) &&
+        Objects.equals(title, that.title) &&
+        Objects.equals(description, that.description) &&
+        Objects.equals(dateCreated, that.dateCreated) &&
+        Objects.equals(timeCreated, that.timeCreated) &&
+        Objects.equals(eventDate, that.eventDate) &&
+        Objects.equals(eventTime, that.eventTime) &&
+        Objects.equals(eventEndDate, that.eventEndDate) &&
+        Objects.equals(eventEndTime, that.eventEndTime) &&
+        Objects.equals(eventStatus, that.eventStatus);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        id,
+        ownerUsername,
+        title,
+        description,
+        dateCreated,
+        timeCreated,
+        eventDate,
+        eventTime,
+        eventEndDate,
+        eventEndTime,
+        eventStatus);
+  }
+
   // ---------- MAPPERS ----------
   public Event toEvent() {
     return new Event(
@@ -123,7 +161,7 @@ public class EventEntity {
     return id;
   }
 
-  public String getownerUsername() {
+  public String getOwnerUsername() {
     return ownerUsername;
   }
 

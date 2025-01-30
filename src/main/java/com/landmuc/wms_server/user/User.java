@@ -12,18 +12,6 @@ public record User(
     AuthorityRole authorityRole,
     LocalDate dateCreated) {
 
-  // TODO: DELETE Constructor?
-  // ---------- CONSTRUCTORS ----------
-  public User(
-      String username,
-      AuthorityRole authorityRole) {
-    this(
-        null,
-        username,
-        authorityRole,
-        null);
-  }
-
   // ---------- MAPPERS ----------
   public UserEntity toUserEntity() {
     return new UserEntity(

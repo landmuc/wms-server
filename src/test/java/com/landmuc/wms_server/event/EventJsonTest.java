@@ -20,17 +20,17 @@ class EventJsonTest {
   // Jackson is a popular JSON processing library
   // JacksonTester is used for testing JSON serialization and deserializaiton
   @Autowired
-  private JacksonTester<Event> json;
+  private JacksonTester<EventEntity> json;
 
   @Autowired
-  private JacksonTester<Event[]> jsonList;
+  private JacksonTester<EventEntity[]> jsonList;
 
-  private Event[] events;
+  private EventEntity[] events;
 
   @BeforeEach
   void setUp() {
     events = Arrays.array(
-        new Event(
+        new EventEntity(
             UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479"),
             "userA",
             "First Title",
@@ -42,7 +42,7 @@ class EventJsonTest {
             LocalDate.of(2025, 11, 17), // eventEndDate
             LocalTime.of(23, 59), // eventEndTime
             EventStatus.ONGOING),
-        new Event(
+        new EventEntity(
             UUID.fromString("38400000-8cf0-11bd-b23e-10b96e4ef00d"),
             "userA",
             "Second Title",
@@ -54,7 +54,7 @@ class EventJsonTest {
             LocalDate.of(2024, 10, 8), // eventEndDate
             LocalTime.of(11, 59), // eventEndTime
             EventStatus.OVER),
-        new Event(
+        new EventEntity(
             UUID.fromString("a22c9092-5983-4111-b11e-6bf41c53a22c"),
             "userC",
             "Third Title",
@@ -71,7 +71,7 @@ class EventJsonTest {
 
   @Test
   void eventSerializationTest() throws IOException {
-    Event event = events[0];
+    EventEntity event = events[0];
     assertThat(json.write(event)).isStrictlyEqualToJson("singleEvent.json");
     assertThat(json.write(event)).hasJsonPathStringValue("@.id");
     assertThat(json.write(event)).extractingJsonPathStringValue("@.id")
@@ -121,7 +121,7 @@ class EventJsonTest {
         }
         """;
 
-    Event event = new Event(
+    EventEntity event = new EventEntity(
         UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479"),
         "userA",
         "First Title",
@@ -134,17 +134,17 @@ class EventJsonTest {
         LocalTime.of(23, 59), // eventEndTime
         EventStatus.ONGOING);
     assertThat(json.parse(expected)).isEqualTo(event);
-    assertThat(json.parseObject(expected).id()).isEqualTo(UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479"));
-    assertThat(json.parseObject(expected).ownerUsername()).isEqualTo("userA");
-    assertThat(json.parseObject(expected).title()).isEqualTo("First Title");
-    assertThat(json.parseObject(expected).description()).isEqualTo("First Description");
-    assertThat(json.parseObject(expected).dateCreated()).isEqualTo(LocalDate.of(2024, 10, 12));
-    assertThat(json.parseObject(expected).timeCreated()).isEqualTo(LocalTime.of(10, 38));
-    assertThat(json.parseObject(expected).eventDate()).isEqualTo("2024-12-24");
-    assertThat(json.parseObject(expected).eventTime()).isEqualTo("14:30:00");
-    assertThat(json.parseObject(expected).eventEndDate()).isEqualTo("2025-11-17");
-    assertThat(json.parseObject(expected).eventEndTime()).isEqualTo("23:59:00");
-    assertThat(json.parseObject(expected).eventStatus()).isEqualTo(EventStatus.ONGOING);
+    assertThat(json.parseObject(expected).getId()).isEqualTo(UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479"));
+    assertThat(json.parseObject(expected).getOwnerUsername()).isEqualTo("userA");
+    assertThat(json.parseObject(expected).getTitle()).isEqualTo("First Title");
+    assertThat(json.parseObject(expected).getDescription()).isEqualTo("First Description");
+    assertThat(json.parseObject(expected).getDateCreated()).isEqualTo(LocalDate.of(2024, 10, 12));
+    assertThat(json.parseObject(expected).getTimeCreated()).isEqualTo(LocalTime.of(10, 38));
+    assertThat(json.parseObject(expected).getEventDate()).isEqualTo("2024-12-24");
+    assertThat(json.parseObject(expected).getEventTime()).isEqualTo("14:30:00");
+    assertThat(json.parseObject(expected).getEventEndDate()).isEqualTo("2025-11-17");
+    assertThat(json.parseObject(expected).getEventEndTime()).isEqualTo("23:59:00");
+    assertThat(json.parseObject(expected).getEventStatus()).isEqualTo(EventStatus.ONGOING);
   }
 
   @Test

@@ -18,31 +18,6 @@ public record Event(
     LocalTime eventEndTime,
     EventStatus eventStatus) {
 
-  // TODO: DELETE Constructor? Is used in EventJsonTest.java
-  // ---------- CONSTRUCTORS ----------
-  public Event(
-      String ownerUsername,
-      String title,
-      String description,
-      LocalDate eventDate,
-      LocalTime eventTime,
-      LocalDate eventEndDate,
-      LocalTime eventEndTime,
-      EventStatus eventStatus) {
-    this(
-        null,
-        ownerUsername,
-        title,
-        description,
-        null,
-        null,
-        eventDate,
-        eventTime,
-        eventEndDate,
-        eventEndTime,
-        eventStatus);
-  }
-
   // ---------- MAPPERS ----------
   public EventEntity toEventEntity() {
     return new EventEntity(
