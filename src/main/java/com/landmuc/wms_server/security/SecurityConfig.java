@@ -19,9 +19,9 @@ class SecurityConfig {
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests(request -> request
-            .requestMatchers("/events/**").hasRole(AuthorityRole.USER.getAuthorityRoleAsString())
-            .requestMatchers("/users/**").hasRole(AuthorityRole.USER.getAuthorityRoleAsString())
-            .requestMatchers("/follows/**").hasRole(AuthorityRole.USER.getAuthorityRoleAsString())
+            .requestMatchers("/events/**").hasRole(AuthorityRole.USER.toString())
+            .requestMatchers("/users/**").hasRole(AuthorityRole.USER.toString())
+            .requestMatchers("/follows/**").hasRole(AuthorityRole.USER.toString())
             .requestMatchers("/h2-console/**").permitAll())
         .httpBasic(Customizer.withDefaults()) // for basic request for APIs etc
         .csrf(crsf -> crsf.disable())
@@ -38,19 +38,19 @@ class SecurityConfig {
     UserDetails userA = users
         .username("userA")
         .password(passwordEncoder.encode("a@123"))
-        .roles(AuthorityRole.USER.getAuthorityRoleAsString())
+        .roles(AuthorityRole.USER.toString())
         .build();
 
     UserDetails userB = users
         .username("userB")
         .password(passwordEncoder.encode("b@344"))
-        .roles("NON-OWNER")
+        .roles(AuthorityRole.NON_USER.toString())
         .build();
 
     UserDetails userC = users
         .username("userC")
         .password(passwordEncoder.encode("c@666"))
-        .roles(AuthorityRole.USER.getAuthorityRoleAsString())
+        .roles(AuthorityRole.USER.toString())
         .build();
 
     // InMemoryUserDetailsManager is implementing UserDetailsService, thats why its

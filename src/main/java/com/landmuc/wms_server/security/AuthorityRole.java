@@ -2,6 +2,7 @@ package com.landmuc.wms_server.security;
 
 public enum AuthorityRole {
   USER("USER"),
+  NON_USER("NON_USER"),
   ADMIN("ADMIN");
 
   private final String asString;
@@ -10,7 +11,8 @@ public enum AuthorityRole {
     this.asString = asString;
   }
 
-  public String getAuthorityRoleAsString() {
+  @Override
+  public String toString() {
     return asString;
   }
 }

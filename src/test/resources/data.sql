@@ -63,13 +63,13 @@ VALUES
     'e711568c-5f32-4e9c-b631-9404888c854f',
     'userB',
     'NON-OWNER',
-    '2025-01-10'
+    '2025-01-11'
 ),
 (
     'b90a3897-a6d8-4c83-8971-015234565432',
     'userC',
     'USER',
-    '2025-01-10'
+    '2025-01-12'
 );
 
 INSERT INTO followed_events (user_id, event_id)

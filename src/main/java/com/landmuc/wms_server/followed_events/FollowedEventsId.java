@@ -18,7 +18,7 @@ public class FollowedEventsId implements Serializable {
     this.eventId = eventId;
   }
 
-  // ---------- equals() and hashCode() ----------
+  // ---------- EQUALS & HASHCODE----------
 
   @Override
   public boolean equals(Object o) {
