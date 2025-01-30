@@ -1,6 +1,7 @@
 {
- "id": "550e8400-e29b-41d4-a716-446655440000",
- "username": "userA", 
- "authorityRole": "USER",
- "dateCreated": "2025-01-10"
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "username": "userA",
+  "hashedPassword": "$2a$10$6h0uwSXGUKGZgq1OeKdmzOW.NsAGpVwxpx5XCZoYTE/fC.YlPrM2O",
+  "authorityRole": "USER",
+  "dateCreated": "2025-01-10"
 }

@@ -19,7 +19,6 @@ public class FollowedEventsId implements Serializable {
   }
 
   // ---------- EQUALS & HASHCODE----------
-
   @Override
   public boolean equals(Object o) {
     // Check if the object is compared with itself

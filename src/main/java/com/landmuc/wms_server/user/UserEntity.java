@@ -1,6 +1,7 @@
 package com.landmuc.wms_server.user;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
 import com.landmuc.wms_server.security.AuthorityRole;
@@ -20,7 +21,7 @@ public class UserEntity {
   // ---------- INSTANCE VARIABLES ----------
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
+  private UUID id = UUID.randomUUID();
   private String username;
   @Column(name = "hashed_password")
   private String hashedPassword;
@@ -77,6 +78,26 @@ public class UserEntity {
         this.username,
         this.authorityRole,
         this.dateCreated);
+  }
+
+  // ---------- EQUALS & HASHCODE----------
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    UserEntity that = (UserEntity) o;
+    return Objects.equals(id, that.id) &&
+        Objects.equals(username, that.username) &&
+        Objects.equals(hashedPassword, that.hashedPassword) &&
+        Objects.equals(authorityRole, that.authorityRole) &&
+        Objects.equals(dateCreated, that.dateCreated);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, username, hashedPassword, authorityRole, dateCreated);
   }
 
   // ---------- GETTERS (AND SETTERS) ----------

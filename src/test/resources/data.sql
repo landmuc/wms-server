@@ -51,22 +51,25 @@ INSERT INTO events (
     'UPCOMING'
 );
 
-INSERT INTO users (id, username, authority_role, date_created)
+INSERT INTO users (id, hashed_password, username, authority_role, date_created)
 VALUES
 (
     '550e8400-e29b-41d4-a716-446655440000',
+    '$2a$10$6h0uwSXGUKGZgq1OeKdmzOW.NsAGpVwxpx5XCZoYTE/fC.YlPrM2O', --passwordA
     'userA',
     'USER',
     '2025-01-10'
 ),
 (
     'e711568c-5f32-4e9c-b631-9404888c854f',
+    '$2a$10$xJ4ZxpLpxAw0BwqUPw5A5uyYgpkHJZ3revK4TvWcqF8mKrEBJHXuq', --passwordB
     'userB',
     'NON-OWNER',
     '2025-01-11'
 ),
 (
     'b90a3897-a6d8-4c83-8971-015234565432',
+    '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', --passwordC
     'userC',
     'USER',
     '2025-01-12'

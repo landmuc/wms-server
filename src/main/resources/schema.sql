@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS events (
 
 CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY,
+    hashed_password VARCHAR(255),
     username VARCHAR(255),
     authority_role VARCHAR(255),
     date_created DATE

@@ -1,20 +1,23 @@
 [
-   {
-     "id": "550e8400-e29b-41d4-a716-446655440000",
-     "username": "userA",
-     "authorityRole": "USER", 
-     "dateCreated": "2025-01-10"
-   },
-   {
-     "id": "e711568c-5f32-4e9c-b631-9404888c854f",
-     "username": "userB",
-     "authorityRole": "NON_USER",
-     "dateCreated": "2025-01-11"
-   },
-   {
-     "id": "b90a3897-a6d8-4c83-8971-015234565432",
-     "username": "userC",
-     "authorityRole": "USER",
-     "dateCreated": "2025-01-12"
-   }
- ]
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "username": "userA",
+    "hashedPassword": "$2a$10$6h0uwSXGUKGZgq1OeKdmzOW.NsAGpVwxpx5XCZoYTE/fC.YlPrM2O",
+    "authorityRole": "USER",
+    "dateCreated": "2025-01-10"
+  },
+  {
+    "id": "e711568c-5f32-4e9c-b631-9404888c854f",
+    "username": "userB",
+    "hashedPassword": "$2a$10$xJ4ZxpLpxAw0BwqUPw5A5uyYgpkHJZ3revK4TvWcqF8mKrEBJHXuq",
+    "authorityRole": "NON_USER",
+    "dateCreated": "2025-01-11"
+  },
+  {
+    "id": "b90a3897-a6d8-4c83-8971-015234565432",
+    "username": "userC",
+    "hashedPassword": "$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy",
+    "authorityRole": "USER",
+    "dateCreated": "2025-01-12"
+  }
+]

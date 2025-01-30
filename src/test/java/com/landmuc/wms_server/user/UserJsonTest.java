@@ -32,16 +32,19 @@ class UserJsonTest {
         new UserEntity(
             UUID.fromString("550e8400-e29b-41d4-a716-446655440000"),
             "userA",
+            "$2a$10$6h0uwSXGUKGZgq1OeKdmzOW.NsAGpVwxpx5XCZoYTE/fC.YlPrM2O",
             AuthorityRole.USER,
             LocalDate.of(2025, 1, 10)),
         new UserEntity(
             UUID.fromString("e711568c-5f32-4e9c-b631-9404888c854f"),
             "userB",
+            "$2a$10$xJ4ZxpLpxAw0BwqUPw5A5uyYgpkHJZ3revK4TvWcqF8mKrEBJHXuq",
             AuthorityRole.NON_USER,
             LocalDate.of(2025, 1, 11)),
         new UserEntity(
             UUID.fromString("b90a3897-a6d8-4c83-8971-015234565432"),
             "userC",
+            "$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy",
             AuthorityRole.USER,
             LocalDate.of(2025, 1, 12)));
   }
@@ -56,6 +59,9 @@ class UserJsonTest {
     assertThat(json.write(user)).hasJsonPathStringValue("@.username");
     assertThat(json.write(user)).extractingJsonPathStringValue("@.username")
         .isEqualTo("userA");
+    assertThat(json.write(user)).hasJsonPathStringValue("@.hashedPassword");
+    assertThat(json.write(user)).extractingJsonPathStringValue("@.hashedPassword")
+        .isEqualTo("$2a$10$6h0uwSXGUKGZgq1OeKdmzOW.NsAGpVwxpx5XCZoYTE/fC.YlPrM2O");
     assertThat(json.write(user)).hasJsonPathStringValue("@.authorityRole");
     assertThat(json.write(user)).extractingJsonPathStringValue("@.authorityRole")
         .isEqualTo("USER");
@@ -75,6 +81,7 @@ class UserJsonTest {
         {
          "id": "550e8400-e29b-41d4-a716-446655440000",
          "username": "userA",
+         "hashedPassword": "$2a$10$6h0uwSXGUKGZgq1OeKdmzOW.NsAGpVwxpx5XCZoYTE/fC.YlPrM2O",
          "authorityRole": "USER",
          "dateCreated": "2025-01-10"
         }
@@ -83,13 +90,14 @@ class UserJsonTest {
     UserEntity user = new UserEntity(
         UUID.fromString("550e8400-e29b-41d4-a716-446655440000"),
         "userA",
+        "$2a$10$6h0uwSXGUKGZgq1OeKdmzOW.NsAGpVwxpx5XCZoYTE/fC.YlPrM2O",
         AuthorityRole.USER,
         LocalDate.of(2025, 1, 10));
 
     assertThat(json.parse(expected)).isEqualTo(user);
     assertThat(json.parseObject(expected).getId()).isEqualTo(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"));
     assertThat(json.parseObject(expected).getUsername()).isEqualTo("userA");
-    assertThat(json.parseObject(expected).getAuthorityRole()).isEqualTo("USER");
+    assertThat(json.parseObject(expected).getAuthorityRole()).isEqualTo(AuthorityRole.USER);
     assertThat(json.parseObject(expected).getDateCreated()).isEqualTo(LocalDate.of(2025, 1, 10));
   }
 
@@ -100,18 +108,21 @@ class UserJsonTest {
            {
              "id": "550e8400-e29b-41d4-a716-446655440000",
              "username": "userA",
+             "hashedPassword": "$2a$10$6h0uwSXGUKGZgq1OeKdmzOW.NsAGpVwxpx5XCZoYTE/fC.YlPrM2O",
              "authorityRole": "USER",
              "dateCreated": "2025-01-10"
            },
            {
              "id": "e711568c-5f32-4e9c-b631-9404888c854f",
              "username": "userB",
+             "hashedPassword": "$2a$10$xJ4ZxpLpxAw0BwqUPw5A5uyYgpkHJZ3revK4TvWcqF8mKrEBJHXuq",
              "authorityRole": "NON_USER",
              "dateCreated": "2025-01-11"
            },
            {
              "id": "b90a3897-a6d8-4c83-8971-015234565432",
              "username": "userC",
+             "hashedPassword": "$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy",
              "authorityRole": "USER",
              "dateCreated": "2025-01-12"
            }
