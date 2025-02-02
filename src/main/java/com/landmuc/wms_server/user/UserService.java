@@ -1,10 +1,11 @@
 package com.landmuc.wms_server.user;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.landmuc.wms_server.domain.exception.UserNotFoundException;
 
 @Service
 public class UserService {
@@ -15,13 +16,11 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-  public User findUserById(UUID requestedId) {
-    Optional<UserEntity> optionalUserEntity = userRepository.findById(requestedId);
+  public User findUserById(UUID userId) {
+    UserEntity userEntity = userRepository.findById(userId)
+        .orElseThrow(() -> new UserNotFoundException("No user found with id: " + userId));
 
-    if (optionalUserEntity.isEmpty()) {
-      return null;
-    }
-    return optionalUserEntity.get().toUser();
+    return userEntity.toUser();
   }
 
 }

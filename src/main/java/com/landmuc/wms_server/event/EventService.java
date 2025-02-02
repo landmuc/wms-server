@@ -23,8 +23,8 @@ public class EventService {
     this.eventRepository = eventRepository;
   }
 
-  public Event findEventById(UUID requestedId) {
-    Optional<EventEntity> optionalEventEntity = eventRepository.findById(requestedId);
+  public Event findEventById(UUID eventId) {
+    Optional<EventEntity> optionalEventEntity = eventRepository.findById(eventId);
 
     if (optionalEventEntity.isPresent()) {
       return optionalEventEntity.get().toEvent();
@@ -51,17 +51,17 @@ public class EventService {
     return eventRepository.save(event.toEventEntity());
   }
 
-  public boolean deleteEventById(UUID requestedId, Principal principal) {
-    if (!eventRepository.existsByIdAndOwnerUsername(requestedId, principal.getName())) {
+  public boolean deleteEventById(UUID eventId, Principal principal) {
+    if (!eventRepository.existsByIdAndOwnerUsername(eventId, principal.getName())) {
       return false;
     }
-    eventRepository.deleteById(requestedId);
+    eventRepository.deleteById(eventId);
     return true;
   }
 
   // create new Event and replace new Event with the old one -> same ID
-  public EventEntity updateEvent(UUID requestedId, Event updatedEvent) {
-    Optional<EventEntity> optionalEventEntity = eventRepository.findById(requestedId);
+  public EventEntity updateEvent(UUID eventId, Event updatedEvent) {
+    Optional<EventEntity> optionalEventEntity = eventRepository.findById(eventId);
 
     if (optionalEventEntity.isEmpty()) {
       return null;

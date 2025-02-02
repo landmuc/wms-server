@@ -28,9 +28,9 @@ public class EventController {
     this.eventService = eventService;
   }
 
-  @GetMapping("/{requestedId}")
-  private ResponseEntity<Event> findEventById(@PathVariable UUID requestedId) {
-    Event event = eventService.findEventById(requestedId);
+  @GetMapping("/{eventId}")
+  private ResponseEntity<Event> findEventById(@PathVariable UUID eventId) {
+    Event event = eventService.findEventById(eventId);
 
     if (event == null) {
       return ResponseEntity.notFound().build();
@@ -59,17 +59,17 @@ public class EventController {
     return ResponseEntity.created(locationOfNewEvent).build();
   }
 
-  @DeleteMapping("/{requestedId}")
-  private ResponseEntity<Void> deleteEvent(@PathVariable UUID requestedId, Principal principal) {
-    if (!eventService.deleteEventById(requestedId, principal)) {
+  @DeleteMapping("/{eventId}")
+  private ResponseEntity<Void> deleteEvent(@PathVariable UUID eventId, Principal principal) {
+    if (!eventService.deleteEventById(eventId, principal)) {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.noContent().build();
   }
 
-  @PutMapping("/{requestedId}")
-  private ResponseEntity<Void> updateEvent(@PathVariable UUID requestedId, @RequestBody Event updatedEvent) {
-    EventEntity eventEntity = eventService.updateEvent(requestedId, updatedEvent);
+  @PutMapping("/{eventId}")
+  private ResponseEntity<Void> updateEvent(@PathVariable UUID eventId, @RequestBody Event updatedEvent) {
+    EventEntity eventEntity = eventService.updateEvent(eventId, updatedEvent);
 
     if (eventEntity == null) {
       return ResponseEntity.notFound().build();

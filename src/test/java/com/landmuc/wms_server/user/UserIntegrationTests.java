@@ -36,4 +36,17 @@ class UserIntegrationTests {
     String dateCreated = documentContext.read("$.dateCreated");
     assertThat(dateCreated).isEqualTo("2025-01-10");
   }
+
+  @Test
+  void shouldReturnAnExceptionWhenUsingAnUnknownUserId() {
+
+    ResponseEntity<String> response = restTemplate
+        .withBasicAuth("userA", "a@123")
+        .getForEntity("/users/661a9511-e29b-41d4-a716-446655440000", String.class);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+
+    DocumentContext documentContext = JsonPath.parse(response.getBody());
+    String message = documentContext.read("$.message");
+    assertThat(message).isEqualTo("No user found with id: 661a9511-e29b-41d4-a716-446655440000");
+  }
 }
