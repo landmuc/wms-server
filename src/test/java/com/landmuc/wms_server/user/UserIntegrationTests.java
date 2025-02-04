@@ -38,8 +38,7 @@ class UserIntegrationTests {
   }
 
   @Test
-  void shouldReturnAnExceptionWhenUsingAnUnknownUserId() {
-
+  void shouldNotReturnAnUserWithAnUnknownId() {
     ResponseEntity<String> response = restTemplate
         .withBasicAuth("userA", "a@123")
         .getForEntity("/users/661a9511-e29b-41d4-a716-446655440000", String.class);

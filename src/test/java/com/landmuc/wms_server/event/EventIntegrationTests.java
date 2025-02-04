@@ -32,8 +32,8 @@ class EventIntegrationTests {
   @Test
   void shouldReturnAnEventWithAKnownId() {
     ResponseEntity<String> response = restTemplate
-        .withBasicAuth("userC", "c@666") // to show that you can access the event
-        // even if you are not the owner
+        // to show that you can access the event even if you are not the owner
+        .withBasicAuth("userC", "c@666")
         .getForEntity("/events/f47ac10b-58cc-4372-a567-0e02b2c3d479", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -68,6 +68,10 @@ class EventIntegrationTests {
         .withBasicAuth("userA", "a@123")
         .getForEntity("/events/9d8f5715-2e7c-4e64-8e34-35f510c12e66", String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+
+    DocumentContext documentContext = JsonPath.parse(response.getBody());
+    String message = documentContext.read("$.message");
+    assertThat(message).isEqualTo("No event found with id: 9d8f5715-2e7c-4e64-8e34-35f510c12e66");
   }
 
   @Test
@@ -359,9 +363,15 @@ class EventIntegrationTests {
         LocalTime.of(23, 59), // eventEndTime
         EventStatus.UPCOMING);
     HttpEntity<EventEntity> request = new HttpEntity<>(eventEntityUpdate);
-    ResponseEntity<Void> response = restTemplate
+    ResponseEntity<String> response = restTemplate
         .withBasicAuth("userA", "a@123")
-        .exchange("/events/9d8f5715-2e7c-4e64-8e34-35f510c12e66", HttpMethod.PUT, request, Void.class);
+        // String.class instead of Void.class to get the reponse body
+        .exchange("/events/9d8f5715-2e7c-4e64-8e34-35f510c12e66", HttpMethod.PUT, request, String.class);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+
+    DocumentContext documentContext = JsonPath.parse(response.getBody());
+    String message = documentContext.read("$.message");
+    assertThat(message).isEqualTo("No event found with id: 9d8f5715-2e7c-4e64-8e34-35f510c12e66");
+
   }
 }
