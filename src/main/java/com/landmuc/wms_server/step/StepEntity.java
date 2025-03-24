@@ -4,21 +4,30 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "steps")
 class StepEntity {
   // ---------- INSTANCE VARIABLES ----------
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
   private String title;
   private String description;
+  @Column(name = "date_created")
   private LocalDate dateCreated;
+  @Column(name = "time_created")
   private LocalTime timeCreated;
+  @Column(name = "step_date")
   private LocalDate stepDate;
+  @Column(name = "step_time")
   private LocalTime stepTime;
+  @Column(name = "step_end_date")
   private LocalDate stepEndDate;
+  @Column(name = "step_end_time")
   private LocalTime stepEndTime;
+  @Column(name = "event_id")
   private UUID eventId;
 
   // ---------- CONSTRUCTORS ----------
