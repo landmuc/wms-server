@@ -1,5 +1,6 @@
 package com.landmuc.wms_server.step;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,4 +29,19 @@ public class StepService {
 
     return stepEntity.toStep();
   }
+
+  public List<Step> getAllStepsOfASingleEvent(UUID eventId) {
+    List<Step> stepList = stepRepository.getAllStepsOfASingleEvent(eventId)
+        .stream()
+        .map(StepEntity::toStep)
+        .toList();
+
+    return stepList;
+  }
+
+  public StepEntity createStep(Step step) {
+    return stepRepository.save(step.toStepEntity());
+
+  }
+
 }
