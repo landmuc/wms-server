@@ -68,6 +68,12 @@ public class EventService {
     EventEntity eventEntity = eventRepository.findById(eventId)
         .orElseThrow(() -> new EventNotFoundException(exceptionEvent + eventId));
 
+    /*
+     * TODO:
+     * refactore the like the update method from StepService
+     * No need to use eventId as separate argument
+     * No need to construct a new Event()
+     */
     EventEntity updatedEventEntity = new Event(
         eventEntity.getId(),
         eventEntity.getOwnerUsername(),

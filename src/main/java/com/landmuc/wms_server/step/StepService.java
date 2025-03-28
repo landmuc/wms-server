@@ -44,4 +44,22 @@ public class StepService {
 
   }
 
+  public StepEntity updateStep(Step updatedStep) {
+    // checks if the step which you want to update exists
+    stepRepository.findById(updatedStep.id())
+        .orElseThrow(() -> new StepNotFoundException(exceptionStep + updatedStep.getId()));
+
+    // saves and returns the updated StepEntity
+    return stepRepository.save(updatedStep.toStepEntity());
+  }
+
+  public boolean deleteStepById(UUID stepId) {
+    if (stepRepository.existsById(stepId)) {
+      stepRepository.deleteById(stepId);
+      return true;
+    }
+
+    return false;
+  }
+
 }
