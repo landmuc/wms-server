@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 
 import com.landmuc.wms_server.domain.exception.EventNotFoundException;
 
-// Business logic should return domain objects (DTO), not HTTP responses
-// also handles data transformation
 @Service
 @PropertySource("classpath:messages.properties")
 public class EventService {
@@ -63,31 +61,11 @@ public class EventService {
     return true;
   }
 
-  // create new Event and replace new Event with the old one -> same ID
-  public EventEntity updateEvent(UUID eventId, Event updatedEvent) {
-    EventEntity eventEntity = eventRepository.findById(eventId)
-        .orElseThrow(() -> new EventNotFoundException(exceptionEvent + eventId));
+  public EventEntity updateEvent(Event updatedEvent) {
+    eventRepository.findById(updatedEvent.getId())
+        .orElseThrow(() -> new EventNotFoundException(exceptionEvent + updatedEvent.getId()));
 
-    /*
-     * TODO:
-     * refactore the like the update method from StepService
-     * No need to use eventId as separate argument
-     * No need to construct a new Event()
-     */
-    EventEntity updatedEventEntity = new Event(
-        eventEntity.getId(),
-        eventEntity.getOwnerUsername(),
-        updatedEvent.title(),
-        updatedEvent.description(),
-        eventEntity.getDateCreated(),
-        eventEntity.getTimeCreated(),
-        updatedEvent.eventDate(),
-        updatedEvent.eventTime(),
-        updatedEvent.eventEndDate(),
-        updatedEvent.eventEndTime(),
-        updatedEvent.eventStatus()).toEventEntity();
-
-    return eventRepository.save(updatedEventEntity);
+    return eventRepository.save(updatedEvent.toEventEntity());
   }
 
 }

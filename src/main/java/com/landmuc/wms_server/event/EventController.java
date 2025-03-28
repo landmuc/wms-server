@@ -43,7 +43,7 @@ public class EventController {
     return ResponseEntity.ok(event);
   }
 
-  @GetMapping()
+  @GetMapping
   private ResponseEntity<List<Event>> getAllEvents(Pageable pageable) {
     List<Event> eventList = eventService.getAllEvents(pageable);
 
@@ -74,7 +74,7 @@ public class EventController {
 
   @PutMapping("/{eventId}")
   private ResponseEntity<Void> updateEvent(@PathVariable UUID eventId, @RequestBody Event updatedEvent) {
-    EventEntity eventEntity = eventService.updateEvent(eventId, updatedEvent);
+    EventEntity eventEntity = eventService.updateEvent(updatedEvent);
 
     if (eventEntity == null) {
       return ResponseEntity.notFound().build();

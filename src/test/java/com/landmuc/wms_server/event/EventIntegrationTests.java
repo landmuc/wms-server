@@ -12,8 +12,6 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
-import com.landmuc.wms_server.event.EventEntity;
-import com.landmuc.wms_server.event.EventStatus;
 
 import net.minidev.json.JSONArray;
 
