@@ -59,7 +59,7 @@ public class StepController {
 
   @PutMapping("/{stepId}")
   private ResponseEntity<Void> updateStep(@PathVariable UUID stepId, @RequestBody Step updatedStep) {
-    StepEntity stepEntity = stepService.updateStep(updatedStep);
+    StepEntity stepEntity = stepService.updateStep(stepId, updatedStep);
 
     if (stepEntity == null) {
       return ResponseEntity.notFound().build();

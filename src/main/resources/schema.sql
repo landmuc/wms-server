@@ -26,4 +26,18 @@ CREATE TABLE IF NOT EXISTS followed_events (
     PRIMARY KEY (user_id, event_id),
     FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS steps (
+    id UUID PRIMARY KEY,
+    title VARCHAR(255),
+    description VARCHAR(255),
+    date_created DATE DEFAULT CURRENT_DATE,
+    time_created TIME DEFAULT CURRENT_TIME,
+    step_date DATE,
+    step_time TIME,
+    step_end_date DATE,
+    step_end_time TIME,
+    event_id UUID,
+    FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE CASCADE
 )

@@ -61,9 +61,9 @@ public class EventService {
     return true;
   }
 
-  public EventEntity updateEvent(Event updatedEvent) {
-    eventRepository.findById(updatedEvent.getId())
-        .orElseThrow(() -> new EventNotFoundException(exceptionEvent + updatedEvent.getId()));
+  public EventEntity updateEvent(UUID eventId, Event updatedEvent) {
+    eventRepository.findById(eventId)
+        .orElseThrow(() -> new EventNotFoundException(exceptionEvent + eventId));
 
     return eventRepository.save(updatedEvent.toEventEntity());
   }

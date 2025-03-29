@@ -93,3 +93,52 @@ VALUES
     'b90a3897-a6d8-4c83-8971-015234565432',
     'f47ac10b-58cc-4372-a567-0e02b2c3d479'
 );
+
+INSERT INTO steps (
+    id,
+    title,
+    description,
+    date_created,
+    time_created,
+    step_date,
+    step_time,
+    step_end_date,
+    step_end_time,
+    event_id
+) VALUES
+(
+    'e47bc10a-48cc-4372-a567-0e02b2c3d479',
+    'First Step Title',
+    'First Step Description',
+    '2024-10-10',
+    '09:15:00',
+    '2024-12-24',
+    '16:30:00',
+    '2024-12-26',
+    '18:45:00',
+    'f47ac10b-58cc-4372-a567-0e02b2c3d479'
+),
+(
+    '28400000-7cf0-11bd-b23e-10b96e4ef00d',
+    'Second Step Title',
+    'Second Step Description',
+    '2024-08-10',
+    '08:30:00',
+    '2024-10-07',
+    '21:30:00',
+    '2024-10-08',
+    '03:00:00',
+    'f47ac10b-58cc-4372-a567-0e02b2c3d479'
+),
+(
+    '922c9092-4983-4111-b11e-6bf41c53a22c',
+    'Third Step Title',
+    'Third Step Description',
+    '2024-10-28',
+    '07:15:00',
+    '2025-12-15',
+    '14:30:00',
+    '2025-12-18',
+    '12:00:00',
+    'a22c9092-5983-4111-b11e-6bf41c53a22c'
+);

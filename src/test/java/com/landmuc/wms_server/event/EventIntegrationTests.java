@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class EventIntegrationTests {
@@ -268,8 +269,12 @@ class EventIntegrationTests {
   @DirtiesContext
   void shouldUpdateAnExistingEvent() {
     EventEntity eventEntityUpdate = new EventEntity(
+        UUID.fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479"),
+        "userA",
         "Updated Title",
         "Updated Description",
+        LocalDate.of(2025, 9, 14), // dateCreated
+        LocalTime.of(14, 30), // timeCreated
         LocalDate.of(2025, 9, 14), // eventDate
         LocalTime.of(14, 30), // eventTime
         LocalDate.of(2025, 11, 27), // eventEndDate
@@ -296,6 +301,10 @@ class EventIntegrationTests {
     assertThat(title).isEqualTo("Updated Title");
     String description = documentContext.read("$.description");
     assertThat(description).isEqualTo("Updated Description");
+    String eventDateCreated = documentContext.read("$.eventDate");
+    assertThat(eventDateCreated).isEqualTo("2025-09-14");
+    String eventTimeCreated = documentContext.read("$.eventTime");
+    assertThat(eventTimeCreated).isEqualTo("14:30:00");
     String eventDate = documentContext.read("$.eventDate");
     assertThat(eventDate).isEqualTo("2025-09-14");
     String eventTime = documentContext.read("$.eventTime");

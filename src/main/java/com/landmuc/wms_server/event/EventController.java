@@ -74,7 +74,7 @@ public class EventController {
 
   @PutMapping("/{eventId}")
   private ResponseEntity<Void> updateEvent(@PathVariable UUID eventId, @RequestBody Event updatedEvent) {
-    EventEntity eventEntity = eventService.updateEvent(updatedEvent);
+    EventEntity eventEntity = eventService.updateEvent(eventId, updatedEvent);
 
     if (eventEntity == null) {
       return ResponseEntity.notFound().build();

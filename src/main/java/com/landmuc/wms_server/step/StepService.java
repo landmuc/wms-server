@@ -44,10 +44,10 @@ public class StepService {
 
   }
 
-  public StepEntity updateStep(Step updatedStep) {
+  public StepEntity updateStep(UUID stepId, Step updatedStep) {
     // checks if the step which you want to update exists
-    stepRepository.findById(updatedStep.id())
-        .orElseThrow(() -> new StepNotFoundException(exceptionStep + updatedStep.getId()));
+    stepRepository.findById(stepId)
+        .orElseThrow(() -> new StepNotFoundException(exceptionStep + stepId));
 
     // saves and returns the updated StepEntity
     return stepRepository.save(updatedStep.toStepEntity());

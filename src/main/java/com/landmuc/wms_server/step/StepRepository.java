@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StepRepository extends JpaRepository<StepEntity, UUID> {
 
-  @Query("SELECT se.stepId FROM StepEntity se WHERE se.eventId = :eventId")
+  @Query("SELECT se.id FROM StepEntity se WHERE se.eventId = :eventId")
   List<StepEntity> getAllStepsOfASingleEvent(@Param("eventId") UUID eventId);
 
 }
