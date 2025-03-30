@@ -30,46 +30,4 @@ public record Step(
         this.eventId);
   }
 
-  // ---------- GETTERS & SETTERS ----------
-
-  public UUID getId() {
-    return id;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public LocalDate getDateCreated() {
-    return dateCreated;
-  }
-
-  public LocalTime getTimeCreated() {
-    return timeCreated;
-  }
-
-  public LocalDate getStepDate() {
-    return stepDate;
-  }
-
-  public LocalTime getStepTime() {
-    return stepTime;
-  }
-
-  public LocalDate getStepEndDate() {
-    return stepEndDate;
-  }
-
-  public LocalTime getStepEndTime() {
-    return stepEndTime;
-  }
-
-  public UUID getEventId() {
-    return eventId;
-  }
-
 }

@@ -20,6 +20,8 @@ import com.landmuc.wms_server.domain.exception.EventNotFoundException;
 public class EventService {
   @Value("${exception.event}")
   private String exceptionEvent;
+  @Value("${exception.mismatchedIds}")
+  private String exceptionMismatchedIds;
 
   private final EventRepository eventRepository;
 
@@ -64,6 +66,10 @@ public class EventService {
   public EventEntity updateEvent(UUID eventId, Event updatedEvent) {
     eventRepository.findById(eventId)
         .orElseThrow(() -> new EventNotFoundException(exceptionEvent + eventId));
+
+    if (eventId != updatedEvent.id()) {
+      throw new EventNotFoundException(String.format(exceptionMismatchedIds, eventId, updatedEvent.id()));
+    }
 
     return eventRepository.save(updatedEvent.toEventEntity());
   }

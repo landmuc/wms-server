@@ -39,5 +39,4 @@ public class FollowedEventsController {
     }
     return ResponseEntity.ok(eventIds);
   }
-
 }
