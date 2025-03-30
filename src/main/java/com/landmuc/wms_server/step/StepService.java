@@ -47,17 +47,13 @@ public class StepService {
   }
 
   public StepEntity updateStep(UUID stepId, Step updatedStep) {
-    // checks if the step which you want to update exists
     stepRepository.findById(stepId)
         .orElseThrow(() -> new StepNotFoundException(exceptionStep + stepId));
 
-    // checks if the id provided in the URI (stepId) and the id of the updated step
-    // you provided are actually the same
-    if (stepId != updatedStep.id()) {
+        if (!stepId.equals(updatedStep.id())) {
       throw new StepNotFoundException(String.format(exceptionMismatchedIds, stepId, updatedStep.id()));
     }
 
-    // saves and returns the updated StepEntity
     return stepRepository.save(updatedStep.toStepEntity());
   }
 

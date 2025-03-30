@@ -46,7 +46,7 @@ public class EventService {
     List<Event> eventList = page.getContent() // getContent() returns an empty list if no entities are found
         .stream()
         .map(EventEntity::toEvent)
-        .toList(); // returns a unmodifiable list
+        .toList(); // returns an unmodifiable list
 
     return eventList;
   }
@@ -64,13 +64,17 @@ public class EventService {
   }
 
   public EventEntity updateEvent(UUID eventId, Event updatedEvent) {
+    // checks if the step which you want to update exists
     eventRepository.findById(eventId)
         .orElseThrow(() -> new EventNotFoundException(exceptionEvent + eventId));
 
-    if (eventId != updatedEvent.id()) {
+    // checks if the id provided in the URI (stepId) and the id of the updated step
+    // you provided are actually the same
+    if (!eventId.equals(updatedEvent.id())) {
       throw new EventNotFoundException(String.format(exceptionMismatchedIds, eventId, updatedEvent.id()));
     }
 
+    // saves and returns the updated StepEntity
     return eventRepository.save(updatedEvent.toEventEntity());
   }
 
