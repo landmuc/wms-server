@@ -32,11 +32,8 @@ public class StepService {
     return stepEntity.toStep();
   }
 
-  public List<Step> getAllStepsOfASingleEvent(UUID eventId) {
-    List<Step> stepList = stepRepository.getAllStepsOfASingleEvent(eventId)
-        .stream()
-        .map(StepEntity::toStep)
-        .toList();
+  public List<UUID> getAllStepIdsOfASingleEvent(UUID eventId) {
+    List<UUID> stepList = stepRepository.getAllStepIdsOfASingleEvent(eventId);
 
     return stepList;
   }
@@ -50,7 +47,7 @@ public class StepService {
     stepRepository.findById(stepId)
         .orElseThrow(() -> new StepNotFoundException(exceptionStep + stepId));
 
-        if (!stepId.equals(updatedStep.id())) {
+    if (!stepId.equals(updatedStep.id())) {
       throw new StepNotFoundException(String.format(exceptionMismatchedIds, stepId, updatedStep.id()));
     }
 
@@ -58,12 +55,11 @@ public class StepService {
   }
 
   public boolean deleteStepById(UUID stepId) {
-    if (stepRepository.existsById(stepId)) {
-      stepRepository.deleteById(stepId);
-      return true;
+    if (!stepRepository.existsById(stepId)) {
+      throw new StepNotFoundException(exceptionStep + stepId);
     }
-
-    return false;
+    stepRepository.deleteById(stepId);
+    return true;
   }
 
 }

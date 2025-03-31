@@ -2,11 +2,14 @@ package com.landmuc.wms_server.step;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import com.landmuc.wms_server.domain.exception.StepNotFoundException;
 
 @RestController
 @RequestMapping("/steps")
@@ -36,11 +41,11 @@ public class StepController {
     return ResponseEntity.ok(step);
   }
 
-  @GetMapping("/steps/{eventId}")
-  private ResponseEntity<List<Step>> getAllStepsOfASingleEvent(@PathVariable UUID eventId) {
-    List<Step> stepList = stepService.getAllStepsOfASingleEvent(eventId);
+  @GetMapping("/event/{eventId}")
+  private ResponseEntity<List<UUID>> getAllStepIdsOfASingleEvent(@PathVariable UUID eventId) {
+    List<UUID> stepList = stepService.getAllStepIdsOfASingleEvent(eventId);
 
-    if (stepList == null) {
+    if (stepList.isEmpty()) {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(stepList);
@@ -73,6 +78,11 @@ public class StepController {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.noContent().build();
+  }
+
+  @ExceptionHandler(StepNotFoundException.class)
+  private ResponseEntity<Map<String, String>> handleStepNotFoundException(StepNotFoundException exception) {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", exception.getMessage()));
   }
 
 }

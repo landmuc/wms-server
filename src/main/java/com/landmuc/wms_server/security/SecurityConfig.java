@@ -22,6 +22,7 @@ class SecurityConfig {
             .requestMatchers("/events/**").hasRole(AuthorityRole.USER.toString())
             .requestMatchers("/users/**").hasRole(AuthorityRole.USER.toString())
             .requestMatchers("/follows/**").hasRole(AuthorityRole.USER.toString())
+            .requestMatchers("/steps/**").hasRole(AuthorityRole.USER.toString())
             .requestMatchers("/h2-console/**").permitAll())
         .httpBasic(Customizer.withDefaults()) // for basic request for APIs etc
         .csrf(crsf -> crsf.disable())

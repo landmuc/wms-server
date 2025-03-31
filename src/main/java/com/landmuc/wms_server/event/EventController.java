@@ -82,6 +82,7 @@ public class EventController {
     return ResponseEntity.noContent().build();
   }
 
+  // Needed to handle the NotFoundException thrown by the service layer
   @ExceptionHandler(EventNotFoundException.class)
   private ResponseEntity<Map<String, String>> handleEventNotFoundException(EventNotFoundException exception) {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", exception.getMessage()));
