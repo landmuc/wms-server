@@ -25,7 +25,7 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   implementation("org.springframework.boot:spring-boot-starter-security")
   // implementation("org.springframework.boot:spring-boot-devtools") // Optional: If you want H2 console
-  // implementation("org.postgresql:postgresql") // PostgreSQL Driver
+  implementation("org.postgresql:postgresql")
 
 
   // testing
